@@ -31,8 +31,15 @@ void displayMe(void)
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     colorcube();
     drawWalls();
-    float c1[]={0.0,0.15,0.0},c2[]={0.2,0.15,0.0};
+    float c1[]={-0.9,0.15,-1.3},c2[]={-0.70,0.15,-1.3};
     bench2(c1,c2);
+    float c3[]={-0.4,0.15,-1.3},c4[]={-0.2,0.15,-1.3};
+    bench2(c3,c4);
+    float c5[]={0.10,0.15,-1.3},c6[]={0.30,0.15,-1.3};
+    bench2(c5,c6);
+    spam_grass();
+    roads();
+    Lake(1.4,0.7,0.4);
     glutSwapBuffers();
 }
 void MyInit(){
@@ -53,7 +60,7 @@ void reshapeWindowChange(int width, int height){
 }
 
 void initialize(){
-	glClearColor(0,0,0,1);
+	glClearColor(0.45,0.843,1,1);
 	glClearDepth(1.0f);
 	glEnable(GL_DEPTH_TEST);
 }
