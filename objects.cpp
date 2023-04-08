@@ -539,7 +539,7 @@ void ferris_wheel(double X,double Z){
     glutSolidTorus(0.02,r,50,50);
     glTranslatef(0,0.0,0.2);
     glutSolidTorus(0.02,r,50,50);
-    glColor3f(1.0,0.0,0.0);
+    glColor3f(0.5,0.5,0.5);
     glRotatef(90,1,0,0);
     drawCylinder(0.01,0.2,0.0,-0.2,0.0);
     glRotatef(-90,1,0,0);

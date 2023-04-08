@@ -7,7 +7,7 @@
 #include "objects.cpp"
 
 int widthWindow=900, heightWindow=700;
-static GLdouble viewer[] = {0.0,0.8,2.0};
+static GLdouble viewer[] = {0.0,1.8,-2.8};
 
 
 void spin(){
