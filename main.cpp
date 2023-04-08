@@ -9,6 +9,17 @@
 int widthWindow=900, heightWindow=700;
 static GLdouble viewer[] = {0.0,0.8,2.0};
 
+
+void spin(){
+    if(wheel_on){
+        T=T+2;
+        if(T>360){
+            T=0;
+        }
+        glutPostRedisplay();
+    }
+}
+
 void displayMe(void)
 {
     glRotatef(Rx,1,0,0);
@@ -40,6 +51,7 @@ void displayMe(void)
     spam_grass();
     roads();
     Lake(1.4,0.7,0.4);
+    ferris_wheel(-0.3,0.7);
     glutSwapBuffers();
 }
 void MyInit(){
@@ -91,6 +103,7 @@ int main(int argc,char** argv)
 	glutInitWindowPosition(400,100);
 	glutCreateWindow("cube");
 	glutDisplayFunc(displayGraphics);
+    glutIdleFunc(spin);
 	glutReshapeFunc(reshapeWindowChange);
 	glutKeyboardFunc(keyboard);
     glutMotionFunc(mouse);

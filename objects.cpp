@@ -504,3 +504,72 @@ void Lake(float x1, float y1, float r)
     // }
     glEnd();
 }
+
+void seat(){
+
+}
+
+void drawCylinder(double radius,double height,double X,double Y,double Z){
+    double Cx=X,Cy=Y,Cz=Z;
+    for(int i=1;i<1000;i++){
+        float x=Cx+radius*(cos(2*PI*i/1000));
+        float z=Cz+radius*(sin(2*PI*i/1000));
+        glBegin(GL_QUADS);
+        glVertex3f(Cx,Cy,Cz);
+        glVertex3f(x,Cy,z);
+        glVertex3f(x,Cy+height,z);
+        glVertex3f(Cx,Cy+height,Cz);
+        glEnd();
+    }
+}
+
+void ferris_wheel(double X,double Z){
+    glTranslatef(X,0.0,Z);
+    double h=0.8;
+    double r=0.7*h;
+    // stand
+    glColor3f(0.5,0.5,0.5);
+    drawCylinder(0.01,h,0.0,0.15,+0.1);
+    drawCylinder(0.01,h,0.0,0.15,-0.1);
+
+    //outer ring
+    glColor3f(0.5,0.5,0.5);
+
+    glTranslatef(0,h+0.15,-0.1);
+    glutSolidTorus(0.02,r,50,50);
+    glTranslatef(0,0.0,0.2);
+    glutSolidTorus(0.02,r,50,50);
+    glColor3f(1.0,0.0,0.0);
+    glRotatef(90,1,0,0);
+    drawCylinder(0.01,0.2,0.0,-0.2,0.0);
+    glRotatef(-90,1,0,0);
+
+    glTranslatef(0,-h-0.15,-0.1);
+
+    //drawing spikes and seats
+    for(int j=0;j<12;j++){
+        glTranslatef(0.0,h+0.15,0);
+        glRotatef(-360*j/12-T,0,0,1);
+        //spikes
+        glColor3f(0.5,0.5,0.5);
+        drawCylinder(0.01,r,0.0,0.0,0.0);
+        //seat
+        glColor3f(0.0,0.0,0.0);
+        glTranslatef(0.0,r,0.0);
+        glRotatef(360*j/12+T,0,0,1);
+        drawCylinder(0.005,0.05,0.0,-0.05,0.0);
+        seat();
+        //connecting rod
+        glRotatef(90,1,0,0);
+        drawCylinder(0.005,0.2,0.0,-0.1,0.0);
+        glRotatef(-90,1,0,0);
+
+        glRotatef(-360*j/12-T,0,0,1);
+        glTranslatef(0.0,-r,0.0);
+
+        glRotatef(360*j/12+T,0,0,1);
+        glTranslatef(0.0,-h-0.15,0);
+    }
+    glTranslatef(-X,0.0,-Z);
+
+}

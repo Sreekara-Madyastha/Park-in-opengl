@@ -6,6 +6,8 @@
 
 GLfloat Tx=0,Ty=0,Tz=0,Rx=0,Ry=0,Rz=0,S=1;
 GLfloat old_x=0,old_y=0;
+bool wheel_on=true;
+double T=0.0;
 
 void keyboard(unsigned char key, int x,int y) {
     glLoadIdentity();
@@ -33,8 +35,16 @@ void keyboard(unsigned char key, int x,int y) {
     else if(key=='e' || key=='E'){
         S*=0.83;
     }
-    else if(key=='c'){
+    else if(key=='c' || key=='C'){
         Tx=0;Ty=0;Tz=0;Rx=0;Ry=0;Rz=0;S=1;
+    }
+    else if(key=='T' || key=='t'){
+        if(wheel_on){
+            wheel_on=false;
+        }
+        else{
+            wheel_on=true;
+        }
     }
     glutPostRedisplay();
     return;
