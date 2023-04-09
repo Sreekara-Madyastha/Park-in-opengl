@@ -505,9 +505,52 @@ void Lake(float x1, float y1, float r)
     glEnd();
 }
 
-void seat(){
+void cuboid(double X,double Y,double Z,double L,double B,double H){
+    double cuboid[8][3]={
+        {X,Y,Z},
+        {X+L,Y,Z},
+        {X+L,Y,Z-B},
+        {X,Y,Z-B},
+        {X,Y-H,Z},
+        {X+L,Y-H,Z},
+        {X+L,Y-H,Z-B},
+        {X,Y-H,Z-B},
+    };
+    glBegin(GL_QUADS);
+        
+        glVertex3f(cuboid[0][0],cuboid[0][1],cuboid[0][2]);
+        glVertex3f(cuboid[1][0],cuboid[1][1],cuboid[1][2]);
+        glVertex3f(cuboid[2][0],cuboid[2][1],cuboid[2][2]);
+        glVertex3f(cuboid[3][0],cuboid[3][1],cuboid[3][2]);
 
+        glVertex3f(cuboid[4][0],cuboid[4][1],cuboid[4][2]);
+        glVertex3f(cuboid[5][0],cuboid[5][1],cuboid[5][2]);
+        glVertex3f(cuboid[6][0],cuboid[6][1],cuboid[6][2]);
+        glVertex3f(cuboid[7][0],cuboid[7][1],cuboid[7][2]);
+        
+        glVertex3f(cuboid[0][0],cuboid[0][1],cuboid[0][2]);
+        glVertex3f(cuboid[1][0],cuboid[1][1],cuboid[1][2]);
+        glVertex3f(cuboid[5][0],cuboid[5][1],cuboid[5][2]);
+        glVertex3f(cuboid[4][0],cuboid[4][1],cuboid[4][2]);
+
+        glVertex3f(cuboid[2][0],cuboid[2][1],cuboid[2][2]);
+        glVertex3f(cuboid[3][0],cuboid[3][1],cuboid[3][2]);
+        glVertex3f(cuboid[7][0],cuboid[7][1],cuboid[7][2]);
+        glVertex3f(cuboid[6][0],cuboid[6][1],cuboid[6][2]);
+
+        glVertex3f(cuboid[1][0],cuboid[1][1],cuboid[1][2]);
+        glVertex3f(cuboid[2][0],cuboid[2][1],cuboid[2][2]);
+        glVertex3f(cuboid[6][0],cuboid[6][1],cuboid[6][2]);
+        glVertex3f(cuboid[5][0],cuboid[5][1],cuboid[5][2]);
+
+        glVertex3f(cuboid[0][0],cuboid[0][1],cuboid[0][2]);
+        glVertex3f(cuboid[3][0],cuboid[3][1],cuboid[3][2]);
+        glVertex3f(cuboid[7][0],cuboid[7][1],cuboid[7][2]);
+        glVertex3f(cuboid[4][0],cuboid[4][1],cuboid[4][2]);
+
+    glEnd();
 }
+
 
 void drawCylinder(double radius,double height,double X,double Y,double Z){
     double Cx=X,Cy=Y,Cz=Z;
@@ -523,45 +566,54 @@ void drawCylinder(double radius,double height,double X,double Y,double Z){
     }
 }
 
+void seat(){
+    glRotatef(45,1,0,0);
+    drawCylinder(0.005,0.1414,0.0,-0.1414,0.0);
+    glRotatef(-90,1,0,0);
+    drawCylinder(0.005,0.1414,0.0,-0.1414,0.0);
+    glRotatef(45,1,0,0);
+    cuboid(-0.05,-0.1,0.1,0.1,0.2,0.01);
+}
+
 void ferris_wheel(double X,double Z){
     glTranslatef(X,0.0,Z);
-    double h=0.8;
+    double h=0.9;
     double r=0.7*h;
     // stand
-    glColor3f(0.5,0.5,0.5);
-    drawCylinder(0.01,h,0.0,0.15,+0.1);
-    drawCylinder(0.01,h,0.0,0.15,-0.1);
+    glColor3f(0,0.5,0.5);
+    drawCylinder(0.01,h,0.0,0.15,+0.15);
+    drawCylinder(0.01,h,0.0,0.15,-0.15);
 
     //outer ring
     glColor3f(0.5,0.5,0.5);
 
-    glTranslatef(0,h+0.15,-0.1);
+    glTranslatef(0,h+0.15,-0.15);
     glutSolidTorus(0.02,r,50,50);
-    glTranslatef(0,0.0,0.2);
+    glTranslatef(0,0.0,0.3);
     glutSolidTorus(0.02,r,50,50);
-    glColor3f(0.5,0.5,0.5);
+    glColor3f(0,0.5,0.5);
     glRotatef(90,1,0,0);
-    drawCylinder(0.01,0.2,0.0,-0.2,0.0);
+    drawCylinder(0.01,0.3,0.0,-0.3,0.0);
     glRotatef(-90,1,0,0);
 
-    glTranslatef(0,-h-0.15,-0.1);
+    glTranslatef(0,-h-0.15,-0.15);
 
     //drawing spikes and seats
     for(int j=0;j<12;j++){
         glTranslatef(0.0,h+0.15,0);
         glRotatef(-360*j/12-T,0,0,1);
         //spikes
-        glColor3f(0.5,0.5,0.5);
+        glColor3f(0.0,0.0,0.0);
         drawCylinder(0.01,r,0.0,0.0,0.0);
         //seat
-        glColor3f(0.0,0.0,0.0);
+        glColor3f(0.3,0.8,0.1);
         glTranslatef(0.0,r,0.0);
         glRotatef(360*j/12+T,0,0,1);
-        drawCylinder(0.005,0.05,0.0,-0.05,0.0);
         seat();
         //connecting rod
+        glColor3f(0.5,0.5,0.5);
         glRotatef(90,1,0,0);
-        drawCylinder(0.005,0.2,0.0,-0.1,0.0);
+        drawCylinder(0.005,0.3,0.0,-0.15,0.0);
         glRotatef(-90,1,0,0);
 
         glRotatef(-360*j/12-T,0,0,1);
@@ -573,3 +625,327 @@ void ferris_wheel(double X,double Z){
     glTranslatef(-X,0.0,-Z);
 
 }
+
+void person(double X,double Z,double h){
+    //legs
+    glColor3f(0.0,0.0,0.0);
+    cuboid(-0.15*h+X,0.4*h+0.15,Z,0.15*h,0.2*h,0.3*h);
+    cuboid(X,0.4*h+0.15,Z,0.15*h,0.2*h,0.3*h);
+    //arms
+    glColor3f(1.0,0.8,0.6);
+    cuboid(0.15*h+X,0.8*h+0.15,Z,0.1*h,0.2*h,0.3*h);
+    cuboid(-0.25*h+X,0.8*h+0.15,Z,0.1*h,0.2*h,0.3*h);
+
+    glColor3f(0.6,0.7,0.9);
+    cuboid(0.14*h+X,0.81*h+0.15,Z+0.01*h,0.12*h,0.22*h,0.1*h);
+    cuboid(-0.26*h+X,0.81*h+0.15,Z+0.01*h,0.12*h,0.22*h,0.1*h);
+    //body
+    glColor3f(0.6,0.7,0.9);
+    cuboid(-0.15*h+X,0.8*h+0.15,Z,0.3*h,0.2*h,0.4*h);
+
+    //head
+    glColor3f(1.0,0.8,0.6);
+    cuboid(-0.1*h+X,h+0.15,Z,0.2*h,0.2*h,0.2*h);
+    //hair
+    glColor3f(0.0,0.0,0.0);
+    cuboid(-0.11*h+X,1.01*h+0.15,Z+0.01*h,0.22*h,0.22*h,0.06*h);
+    cuboid(-0.11*h+X,1.01*h+0.15,Z-0.1*h,0.22*h,0.11*h,0.21*h);
+
+    //eyes
+    glColor3f(0.0,0.0,0.0);
+    cuboid(+(5/70)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    glColor3f(1.0,1.0,1.0);
+    cuboid(+(5/70)*h+(0.2/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+
+    glColor3f(0.0,0.0,0.0);
+    cuboid(-(5/70)*h-(0.6/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    glColor3f(1.0,1.0,1.0);
+    cuboid(-(5/70)*h-(0.6/7)*h+(0.2/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+}
+
+void make_sphere(){
+    glutSolidSphere(1, 30, 30); 
+}
+
+void make_cube()
+{
+    glTranslatef(0.5,0.5,0.5);
+    glutSolidCube(1); 
+}
+
+
+
+void trunk(int x,int y,int z)
+{
+    glTranslatef(0,0.15,0);
+    glScalef(0.03,0.035,0.03);
+    //trunk
+    glColor3f(0.67,0.34, 0);
+    glPushMatrix();
+    glTranslatef(x,y,z);
+    glScalef(6,6,-6);
+    make_cube();
+    glPopMatrix(); 
+
+    // middle part
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+6,z+1);
+    glScalef(8,7,-8);
+    make_cube();
+    glPopMatrix(); 
+    
+
+    //spheres 
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+6,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+6,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+6,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+6,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+    // 2nd line
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+8,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+8,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+8,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+8,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+
+    //3rd line
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+11,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+11,z+1);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7,y+11,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1,y+11,z-7);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+    // middle line 1
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+6,z+1.5);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7.5,y+6,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+6,z-7.5);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1.5,y+6,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+
+    // middle line  2
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+8.5,z+2);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+8,y+8.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+8.5,z-8);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-2,y+8.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+    
+
+        // middle line  3
+
+      glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+11.5,z+1.5);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+7.5,y+11.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+3,y+11.5,z-7.5);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x-1.5,y+11.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+     //top corner
+       glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+4,y+13,z-4);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+      glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+2,y+12.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+      glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+5,y+12.5,z-3);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+      glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+2,y+12.5,z-4);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+      glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+5,y+12.5,z-4);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+2,y+12.5,z-2);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+    glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+5,y+12.5,z-2);
+    glScalef(2.5,2.5,-2.5);
+    make_sphere();
+    glPopMatrix(); 
+
+
+     glColor3f(0,0.8,0);
+    glPushMatrix();
+    glTranslatef(x+2,y+12.5,z-1);
+    glScalef(3,3,3);
+    make_sphere();
+    glPopMatrix(); 
+    glScalef(1/0.03,1/0.035,1/0.03);
+    glTranslatef(0,-0.15,0);
+}
+

@@ -52,6 +52,8 @@ void displayMe(void)
     roads();
     Lake(1.4,0.7,0.4);
     ferris_wheel(-0.3,0.7);
+    person(0.3,0.0,0.2);
+    trunk(0,0.15,0);
     glutSwapBuffers();
 }
 void MyInit(){
@@ -101,7 +103,7 @@ int main(int argc,char** argv)
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
 	glutInitWindowSize(widthWindow, heightWindow);
 	glutInitWindowPosition(400,100);
-	glutCreateWindow("cube");
+	glutCreateWindow("PARK IN OPENGL");
 	glutDisplayFunc(displayGraphics);
     glutIdleFunc(spin);
 	glutReshapeFunc(reshapeWindowChange);
