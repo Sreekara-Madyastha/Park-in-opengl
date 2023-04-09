@@ -3,6 +3,13 @@
 #include<math.h>
 #include <GL/glut.h>
 #include<GL/gl.h>
+
+
+
+double Angle=0;
+double Direction=0;
+double people[1][2]={{0.3,0.2}};
+
 #include "movement.cpp"
 #include "objects.cpp"
 
@@ -22,10 +29,11 @@ void spin(){
 
 void displayMe(void)
 {
+    glTranslatef(Tx,Ty,Tz);
     glRotatef(Rx,1,0,0);
     glRotatef(Ry,0,1,0);
     glRotatef(Rz,0,0,1);
-    glTranslatef(Tx,Ty,Tz);
+    
     glScalef(S,S,S);
     
     GLfloat v[8][3]={
@@ -52,8 +60,8 @@ void displayMe(void)
     roads();
     Lake(1.4,0.7,0.4);
     ferris_wheel(-0.3,0.7);
-    person(0.3,0.0,0.2);
-    trunk(0,0.15,0);
+    // trunk(0,0.15,0);
+    person(people[0][0],people[0][1]);
     glutSwapBuffers();
 }
 void MyInit(){
@@ -108,6 +116,7 @@ int main(int argc,char** argv)
     glutIdleFunc(spin);
 	glutReshapeFunc(reshapeWindowChange);
 	glutKeyboardFunc(keyboard);
+    glutSpecialFunc(Person_movement);
     glutMotionFunc(mouse);
 	initialize();
 	glutMainLoop();

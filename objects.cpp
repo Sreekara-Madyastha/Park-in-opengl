@@ -626,41 +626,87 @@ void ferris_wheel(double X,double Z){
 
 }
 
-void person(double X,double Z,double h){
+
+
+void person(double X,double Z){
+
+    
+    glTranslatef(X,0,Z);
+    glRotatef(Direction,0,1,0);
+    double h=0.2;
     //legs
     glColor3f(0.0,0.0,0.0);
-    cuboid(-0.15*h+X,0.4*h+0.15,Z,0.15*h,0.2*h,0.3*h);
-    cuboid(X,0.4*h+0.15,Z,0.15*h,0.2*h,0.3*h);
+    
+    
+    glTranslatef(-0.15*h,0.4*h+0.15,0.0);
+    glRotatef(-Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.15*h,0.2*h,0.3*h);
+    glRotatef(Angle,1,0,0);
+    glTranslatef(0.15*h,-0.4*h-0.15,0.0);
+
+    glTranslatef(0.0,0.4*h+0.15,0.0);
+    glRotatef(Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.15*h,0.2*h,0.3*h);
+    glRotatef(-Angle,1,0,0);
+    glTranslatef(0.0,-0.4*h-0.15,0.0);
+
     //arms
     glColor3f(1.0,0.8,0.6);
-    cuboid(0.15*h+X,0.8*h+0.15,Z,0.1*h,0.2*h,0.3*h);
-    cuboid(-0.25*h+X,0.8*h+0.15,Z,0.1*h,0.2*h,0.3*h);
+    
+    glTranslatef(0.15*h,0.8*h+0.15,0.0);
+    glRotatef(-Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.1*h,0.2*h,0.3*h);
+    glRotatef(Angle,1,0,0);
+    glTranslatef(-0.15*h,-0.8*h-0.15,0.0);
+
+    glTranslatef(-0.25*h,0.8*h+0.15,0.0);
+    glRotatef(Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.1*h,0.2*h,0.3*h);
+    glRotatef(-Angle,1,0,0);
+    glTranslatef(0.25*h,-0.8*h-0.15,0.0);
+
 
     glColor3f(0.6,0.7,0.9);
-    cuboid(0.14*h+X,0.81*h+0.15,Z+0.01*h,0.12*h,0.22*h,0.1*h);
-    cuboid(-0.26*h+X,0.81*h+0.15,Z+0.01*h,0.12*h,0.22*h,0.1*h);
+    glTranslatef(0.14*h,0.81*h+0.15,+0.01*h);
+    glRotatef(-Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.12*h,0.22*h,0.1*h);
+    glRotatef(Angle,1,0,0);
+    glTranslatef(-0.14*h,-0.81*h-0.15,-0.01*h);
+    
+
+    glTranslatef(-0.26*h,0.81*h+0.15,+0.01*h);
+    glRotatef(Angle,1,0,0);
+    cuboid(0.0,0.0,0.0,0.12*h,0.22*h,0.1*h);
+    glRotatef(-Angle,1,0,0);
+    glTranslatef(0.26*h,-0.81*h-0.15,-0.01*h);
+    
     //body
     glColor3f(0.6,0.7,0.9);
-    cuboid(-0.15*h+X,0.8*h+0.15,Z,0.3*h,0.2*h,0.4*h);
+    cuboid(-0.15*h,0.8*h+0.15,0.0,0.3*h,0.2*h,0.4*h);
 
     //head
     glColor3f(1.0,0.8,0.6);
-    cuboid(-0.1*h+X,h+0.15,Z,0.2*h,0.2*h,0.2*h);
+    cuboid(-0.1*h,h+0.15,0.0,0.2*h,0.2*h,0.2*h);
     //hair
     glColor3f(0.0,0.0,0.0);
-    cuboid(-0.11*h+X,1.01*h+0.15,Z+0.01*h,0.22*h,0.22*h,0.06*h);
-    cuboid(-0.11*h+X,1.01*h+0.15,Z-0.1*h,0.22*h,0.11*h,0.21*h);
+    cuboid(-0.11*h,1.01*h+0.15,+0.01*h,0.22*h,0.22*h,0.06*h);
+    cuboid(-0.11*h,1.01*h+0.15,-0.1*h,0.22*h,0.11*h,0.21*h);
 
     //eyes
     glColor3f(0.0,0.0,0.0);
-    cuboid(+(5/70)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    cuboid(+(5/70)*h,(0.75+0.8/5)*h+0.15,0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
     glColor3f(1.0,1.0,1.0);
-    cuboid(+(5/70)*h+(0.2/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    cuboid(+(5/70)*h+(0.2/7)*h,(0.75+0.8/5)*h+0.15,0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
 
     glColor3f(0.0,0.0,0.0);
-    cuboid(-(5/70)*h-(0.6/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    cuboid(-(5/70)*h-(0.6/7)*h,(0.75+0.8/5)*h+0.15,0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
     glColor3f(1.0,1.0,1.0);
-    cuboid(-(5/70)*h-(0.6/7)*h+(0.2/7)*h+X,(0.75+0.8/5)*h+0.15,Z+0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    cuboid(-(5/70)*h-(0.6/7)*h+(0.2/7)*h,(0.75+0.8/5)*h+0.15,0.01*h,(2.5/70)*h,0.01*h,(0.2/5)*h);
+    
+    glRotatef(-Direction,0,1,0);
+    glTranslatef(-X,0,-Z);
+    
+    
 }
 
 void make_sphere(){
