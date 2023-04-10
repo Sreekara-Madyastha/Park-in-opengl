@@ -3,6 +3,9 @@
 #define PI 3.14159
 using namespace std;
 
+void Cylin_draw(double radius,double height,double X,double Y,double Z);
+void Draw_cube(float v[][3]);
+
 float ver[8][3] = {
     {-3.0, 0.15, -1.5},
     {-3.0, 0.15, 1.5},
@@ -483,25 +486,6 @@ void bench2(float c1[], float c2[])
 
     glVertex3f(c1[0] - 0.05, c1[1] + 0.07, c1[2] - 0.05);
 
-    glEnd();
-}
-
-void Lake(float x1, float y1, float r)
-{
-    float x2, y2;
-    float angle;
-    double radius = r;
-    glColor3f(0.366, 0, 0.63);
-    glBegin(GL_TRIANGLE_FAN);
-    glVertex3f(x1, 0.155, y1);
-    // for(float j=0;j<r;j+=0.001){
-    for (angle = 1.0f; angle < 361.0f; angle += 0.2)
-    {
-        x2 = x1 + sin(angle) * radius;
-        y2 = y1 + cos(angle) * radius;
-        glVertex3f(x2, 0.155, y2);
-    }
-    // }
     glEnd();
 }
 
@@ -993,5 +977,531 @@ void trunk(int x,int y,int z)
     glPopMatrix(); 
     glScalef(1/0.03,1/0.035,1/0.03);
     glTranslatef(0,-0.15,0);
+}
+
+
+void Lake(float x1, float y1, float r)
+{
+    float x2, y2;
+    double radius = r;
+    float xo=x1, yo=y1+r;
+    float angle;
+    glColor3f(0.206, 0.362, 0.433);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(x1, 0.165, y1);
+    for (angle = 1.0f; angle < 361.0f; angle += 0.2)
+    {
+        x2 = x1 + sin(angle) * radius;
+        y2 = y1 + cos(angle) * radius;
+        glVertex3f(x2, 0.165, y2);
+    }
+    glEnd();
+    glBegin(GL_QUADS);
+    glColor3f(0.204, 0.308, 0.487);
+    glVertex3f(1.35, 0.165, 0.7);
+    glVertex3f(1.65, 0.165, 0.7);
+    glVertex3f(1.65, 0.165, 1.5);
+    glVertex3f(1.35, 0.165, 1.5);
+    glEnd();
+    glColor3f(0.135, 0.065, 0.001);
+    Cylin_draw(0.02,0.05,1.25,0.15,1.15);
+    Cylin_draw(0.02,0.05,1.75,0.15,1.15);
+    Cylin_draw(0.02,0.05,1.75,0.15,1.35);
+    Cylin_draw(0.02,0.05,1.25,0.15,1.35);
+    Cylin_draw(0.008,0.13,1.25,0.21,1.15);
+    Cylin_draw(0.008,0.13,1.75,0.21,1.15);
+    Cylin_draw(0.008,0.13,1.25,0.21,1.35);
+    Cylin_draw(0.008,0.13,1.75,0.21,1.35);
+    float v1[8][3]={
+        {1.22,0.20,1.38},{1.22,0.20,1.31},{1.78,0.20,1.31},{1.78,0.20,1.38},{1.22,0.21,1.38},{1.22,0.21,1.31},{1.78,0.21,1.31},{1.78,0.21,1.38}
+    };
+    float v2[8][3]={
+        {1.22,0.20,1.31},{1.22,0.20,1.25},{1.78,0.20,1.25},{1.78,0.20,1.31},{1.22,0.21,1.31},{1.22,0.21,1.25},{1.78,0.21,1.25},{1.78,0.21,1.31}
+    };
+    float v3[8][3]={
+        {1.22,0.20,1.25},{1.22,0.20,1.19},{1.78,0.20,1.19},{1.78,0.20,1.25},{1.22,0.21,1.25},{1.22,0.21,1.19},{1.78,0.21,1.19},{1.78,0.21,1.25}
+    };
+    float v4[8][3]={
+        {1.22,0.20,1.19},{1.22,0.20,1.12},{1.78,0.20,1.12},{1.78,0.20,1.19},{1.22,0.21,1.19},{1.22,0.21,1.12},{1.78,0.21,1.12},{1.78,0.21,1.19}
+    };
+    glColor3f(0.438, 0.344, 0.218);
+    Draw_cube(v1);
+    glColor3f(0.454, 0.321, 0.225);
+    Draw_cube(v2);
+    glColor3f(0.438, 0.344, 0.218);
+    Draw_cube(v3);
+    glColor3f(0.454, 0.321, 0.225);
+    Draw_cube(v4);
+    glColor3f(0.135, 0.065, 0.001);
+    float v5[8][3]={
+        {1.22,0.33,1.36},{1.78,0.33,1.36},{1.78,0.33,1.34},{1.22,0.33,1.34},{1.22,0.31,1.36},{1.78,0.31,1.36},{1.78,0.31,1.34},{1.22,0.31,1.34}
+    };
+    Draw_cube(v5);
+    float v6[8][3]={
+        {1.22,0.33,1.16},{1.78,0.33,1.16},{1.78,0.33,1.14},{1.22,0.33,1.14},{1.22,0.31,1.16},{1.78,0.31,1.16},{1.78,0.31,1.14},{1.22,0.31,1.14}
+    };
+    Draw_cube(v6);
+
+    //Side walls
+    //Straight track
+    glColor3f(1, 1, 1);
+    float v7[8][3]={
+        {1.32,0.14,1.495},{1.32,0.20,1.495},{1.32,0.20,0.87},{1.32,0.14,0.87},{1.38,0.14,1.495},{1.38,0.20,1.495},{1.38,0.20,0.87},{1.38,0.14,0.87}
+    };
+    Draw_cube(v7);
+    glColor3f(1, 1, 1);
+    float v8[8][3]={
+        {1.62,0.14,1.495},{1.62,0.20,1.495},{1.62,0.20,0.87},{1.62,0.14,0.87},{1.68,0.14,1.495},{1.68,0.20,1.495},{1.68,0.20,0.87},{1.68,0.14,0.87}
+    };
+    Draw_cube(v8);
+    //Circle Boundary
+    float x_o=1.97,y_o=0.4,z_o=0.14;
+    float a_o=2.03,b_o=0.4,c_o=0.14;
+    for(float p=0;p<=((77.3)*PI)/180;p+=(2*(PI)/180)){
+        float x_1=1.5+(0.47)*cos(p),y_1=0.4+(0.47)*sin(p),z_1=0.20;
+        float a_1=1.5+(0.53)*cos(p),b_1=0.4+(0.53)*sin(p),c_1=0.20;
+        float v[8][3]={
+            {x_o,z_o,y_o},{x_1,z_o,y_1},{x_1,z_1,y_1},{x_o,z_1,y_o},{a_o,z_o,b_o},{a_1,z_o,b_1},{a_1,z_1,b_1},{a_o,z_1,b_o}
+        };
+        Draw_cube(v);
+        x_o=x_1;
+        y_o=y_1;
+        a_o=a_1;
+        b_o=b_1;
+    }
+    x_o=1.97,y_o=0.4,z_o=0.14;
+    a_o=2.03,b_o=0.4,c_o=0.14;
+    for(float p=2*PI;p>=((102.7)*PI)/180;p-=(2*(PI)/180)){
+        float x_1=1.5+(0.47)*cos(p),y_1=0.4+(0.47)*sin(p),z_1=0.20;
+        float a_1=1.5+(0.53)*cos(p),b_1=0.4+(0.53)*sin(p),c_1=0.20;
+        float v[8][3]={
+            {x_o,z_o,y_o},{x_1,z_o,y_1},{x_1,z_1,y_1},{x_o,z_1,y_o},{a_o,z_o,b_o},{a_1,z_o,b_1},{a_1,z_1,b_1},{a_o,z_1,b_o}
+        };
+        Draw_cube(v);
+        x_o=x_1;
+        y_o=y_1;
+        a_o=a_1;
+        b_o=b_1;
+    }
+
+
+}
+
+void Draw_cube(float v[][3]){
+    glBegin(GL_QUADS);
+    
+    //Front
+    glVertex3f(v[0][0], v[0][1], v[0][2]);
+    glVertex3f(v[1][0], v[1][1], v[1][2]);
+    glVertex3f(v[2][0], v[2][1], v[2][2]);
+    glVertex3f(v[3][0], v[3][1], v[3][2]);
+    //Back
+    glVertex3f(v[4][0], v[4][1], v[4][2]);
+    glVertex3f(v[5][0], v[5][1], v[5][2]);
+    glVertex3f(v[6][0], v[6][1], v[6][2]);
+    glVertex3f(v[7][0], v[7][1], v[7][2]);
+    //R side
+    glVertex3f(v[1][0], v[1][1], v[1][2]);
+    glVertex3f(v[5][0], v[5][1], v[5][2]);
+    glVertex3f(v[6][0], v[6][1], v[6][2]);
+    glVertex3f(v[2][0], v[2][1], v[2][2]);
+    //L side
+    glVertex3f(v[0][0], v[0][1], v[0][2]);
+    glVertex3f(v[4][0], v[4][1], v[4][2]);
+    glVertex3f(v[7][0], v[7][1], v[7][2]);
+    glVertex3f(v[3][0], v[3][1], v[3][2]);
+    //Top
+    glVertex3f(v[0][0], v[0][1], v[0][2]);
+    glVertex3f(v[1][0], v[1][1], v[1][2]);
+    glVertex3f(v[5][0], v[5][1], v[5][2]);
+    glVertex3f(v[4][0], v[4][1], v[4][2]);
+    //Bottom
+    glVertex3f(v[3][0], v[3][1], v[3][2]);
+    glVertex3f(v[7][0], v[7][1], v[7][2]);
+    glVertex3f(v[6][0], v[6][1], v[6][2]);
+    glVertex3f(v[2][0], v[2][1], v[2][2]);
+
+    glEnd();
+}
+
+void Cylin_draw(double radius,double height,double X,double Y,double Z){
+    double Cx=X,Cy=Y,Cz=Z;
+    for(int i=1;i<10;i++){
+        float x=Cx+radius*(cos(2*PI*i/10));
+        float z=Cz+radius*(sin(2*PI*i/10));
+        glBegin(GL_QUADS);
+        glVertex3f(Cx,Cy,Cz);
+        glVertex3f(x,Cy,z);
+        glVertex3f(x,Cy+height,z);
+        glVertex3f(Cx,Cy+height,Cz);
+        glEnd();
+    }
+}
+
+void drawHorizontalCylinder(double radius,double height,double X,double Y,double Z){
+
+    double Cx=X,Cy=Y,Cz=Z;
+
+    for(int i=1;i<1000;i++){
+
+        float x=Cx+radius*(cos(2*PI*i/1000));
+
+        float y=Cy+radius*(sin(2*PI*i/1000));
+
+        glBegin(GL_QUADS);
+
+        glVertex3f(Cx,Cy,Cz);
+
+        glVertex3f(x,y,Cz);
+
+        glVertex3f(x,y,Cz+height);
+
+        glVertex3f(Cx,Cy,Cz+height);
+
+        glEnd();
+
+    }
+
+}
+
+
+void slide()
+
+{
+
+    float vert[8][3] = {
+
+    {2.1,0.17,-1.3},
+
+    {1.65,0.28,-1.3},
+
+    {1.675,0.28,-1.3},
+
+    {2.125,0.17,-1.3},
+
+    {2.1,0.17,-1.4},
+
+    {1.65,0.28,-1.4},
+
+    {1.675,0.28,-1.4},
+
+    {2.125,0.17,-1.4},
+
+    };
+
+ 
+
+    glBegin(GL_QUADS);
+
+ 
+
+    // front
+
+    glColor3f(0,0,1);
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[1]);
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+    //back
+
+    glVertex3fv(vert[0+4]);
+
+    glVertex3fv(vert[1+4]);
+
+    glVertex3fv(vert[2+4]);
+
+    glVertex3fv(vert[3+4]);
+
+    // left
+
+    glColor3f(1,0,0);
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[3]);
+
+    glVertex3fv(vert[7]);
+
+    glVertex3fv(vert[4]);
+
+    // right
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+    glVertex3fv(vert[6]);
+
+    glVertex3fv(vert[5]);
+
+    // top
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+   glVertex3fv(vert[7]);
+
+    glVertex3fv(vert[6]);
+
+    // bottom
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[1]);
+
+    glVertex3fv(vert[5]);
+
+    glVertex3fv(vert[4]);
+
+ 
+
+    glEnd();
+
+ 
+
+    glColor3f(0,1,0);
+
+ 
+
+    drawCylinder(0.0075,0.035,2.05,0.15,-1.38);
+
+    drawCylinder(0.0075,0.035,2.05,0.15,-1.32);
+
+ 
+
+    drawCylinder(0.005,0.2,1.65,0.15,-1.39);
+
+    drawCylinder(0.005,0.2,1.65,0.15,-1.31);
+
+ 
+
+    glColor3f(0,0,1);
+
+    glBegin(GL_QUADS);
+
+    glVertex3f(2.125,0.17,-1.3);
+
+    glVertex3f(1.675,0.28,-1.3);
+
+    glVertex3f(1.675,0.30,-1.3);
+
+    glVertex3f(2.125,0.19,-1.3);
+
+ 
+
+    glVertex3f(2.125,0.17,-1.4);
+
+    glVertex3f(1.675,0.28,-1.4);
+
+    glVertex3f(1.675,0.30,-1.4);
+
+    glVertex3f(2.125,0.19,-1.4);
+
+ 
+
+    glVertex3f(1.675,0.28,-1.4);
+
+    glVertex3f(1.65,0.28,-1.4);
+
+    glVertex3f(1.65,0.30,-1.4);
+
+    glVertex3f(1.675,0.30,-1.4);
+
+ 
+
+    glVertex3f(1.675,0.28,-1.3);
+
+    glVertex3f(1.65,0.28,-1.3);
+
+    glVertex3f(1.65,0.30,-1.3);
+
+    glVertex3f(1.675,0.30,-1.3);
+
+    glEnd();
+
+ 
+
+    glColor3f(0,1,0);
+
+    drawHorizontalCylinder(0.005,0.1,1.65,0.35,-1.4);
+
+ 
+
+    drawHorizontalCylinder(0.005,0.08,1.65,0.17,-1.39);
+
+    drawHorizontalCylinder(0.005,0.08,1.65,0.20,-1.39);
+
+    drawHorizontalCylinder(0.005,0.08,1.65,0.23,-1.39);
+
+    drawHorizontalCylinder(0.005,0.08,1.65,0.26,-1.39);
+
+
+}
+
+
+void seeSaw()
+
+{
+
+    float vert[8][3] = {
+
+        {1.4-0.2,0.175+0.025,-1.4},
+
+        {1.15-0.2,0.175+0.025,-1.4},
+
+        {1.15-0.2,0.2+0.025,-1.4},
+
+        {1.4-0.2,0.2+0.025,-1.4},
+
+        {1.4-0.2,0.175+0.025,-1.35},
+
+        {1.15-0.2,0.175+0.025,-1.35},
+
+        {1.15-0.2,0.2+0.025,-1.35},
+
+        {1.4-0.2,0.2+0.025,-1.35},
+
+    };
+
+ 
+
+    glBegin(GL_TRIANGLES);
+
+    glColor3f(0,0,0);
+
+    glVertex3f(1.075,0.1875+0.025,-1.39);
+
+    glVertex3f(1.1,0.15,-1.39);
+
+    glVertex3f(1.05,0.15,-1.39);
+
+ 
+
+    glVertex3f(1.075,0.1875+0.025,-1.36);
+
+    glVertex3f(1.1,0.15,-1.36);
+
+    glVertex3f(1.05,0.15,-1.36);
+
+    glEnd();
+
+ 
+
+    glColor3f(0,0,0);
+
+    drawCylinder(0.005,0.035,0.98,0.225,-1.39);
+
+    drawCylinder(0.005,0.035,0.98,0.225,-1.36);
+
+    drawHorizontalCylinder(0.005,0.04,0.98,0.225+0.035,-1.395);
+
+ 
+
+    drawCylinder(0.005,0.035,1.17,0.225,-1.39);
+
+    drawCylinder(0.005,0.035,1.17,0.225,-1.36);
+
+    drawHorizontalCylinder(0.005,0.04,1.17,0.225+0.035,-1.395);
+
+ 
+
+    glBegin(GL_QUADS);
+
+ 
+
+    glColor3f(0,0,0);
+
+    glVertex3f(1.075,0.1875+0.025,-1.39);
+
+    glVertex3f(1.075,0.1875+0.025,-1.36);
+
+    glVertex3f(1.1,0.15,-1.36);
+
+    glVertex3f(1.1,0.15,-1.39);
+
+ 
+
+    glVertex3f(1.075,0.1875+0.025,-1.39);
+
+    glVertex3f(1.075,0.1875+0.025,-1.36);
+
+    glVertex3f(1.05,0.15,-1.36);
+
+    glVertex3f(1.05,0.15,-1.39);
+
+ 
+
+    glColor3f(1,0,0);
+
+    // front
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[1]);
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+    //back
+
+    glVertex3fv(vert[0+4]);
+
+    glVertex3fv(vert[1+4]);
+
+    glVertex3fv(vert[2+4]);
+
+    glVertex3fv(vert[3+4]);
+
+    // left
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[3]);
+
+    glVertex3fv(vert[7]);
+
+    glVertex3fv(vert[4]);
+
+    // right
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+    glVertex3fv(vert[6]);
+
+    glVertex3fv(vert[5]);
+
+    // top
+
+    glVertex3fv(vert[2]);
+
+    glVertex3fv(vert[3]);
+
+    glVertex3fv(vert[7]);
+
+    glVertex3fv(vert[6]);
+
+    // bottom
+
+    glVertex3fv(vert[0]);
+
+    glVertex3fv(vert[1]);
+
+   glVertex3fv(vert[5]);
+
+    glVertex3fv(vert[4]);
+
+ 
+
+    glEnd();
+    glScalef(0.5,0.5,0.5);
 }
 

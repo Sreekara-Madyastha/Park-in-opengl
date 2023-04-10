@@ -58,10 +58,12 @@ void displayMe(void)
     bench2(c5,c6);
     spam_grass();
     roads();
-    Lake(1.4,0.7,0.4);
+    Lake(1.5,0.4,0.5);
+    seeSaw();
+    slide();
     ferris_wheel(-0.3,0.7);
-    // trunk(0,0.15,0);
     person(people[0][0],people[0][1]);
+
     glutSwapBuffers();
 }
 void MyInit(){
