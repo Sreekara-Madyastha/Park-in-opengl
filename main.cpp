@@ -3,6 +3,7 @@
 #include<math.h>
 #include <GL/glut.h>
 #include<GL/gl.h>
+// #include "SOIL/SOIL.h" 
 
 
 
@@ -17,6 +18,9 @@ int widthWindow=900, heightWindow=700;
 static GLdouble viewer[] = {0.0,1.8,-2.8};
 
 
+
+
+
 void spin(){
     if(wheel_on){
         T=T+2;
@@ -26,6 +30,7 @@ void spin(){
         glutPostRedisplay();
     }
 }
+
 
 void displayMe(void)
 {
@@ -63,13 +68,17 @@ void displayMe(void)
     slide();
     ferris_wheel(-0.3,0.7);
     person(people[0][0],people[0][1]);
-
+    Lights_spam();
+    Tree_spam();
+    swing();
+    merryGoRound();
     glutSwapBuffers();
 }
 void MyInit(){
     glClearColor(0,0,0,1);
     glColor3f(1,0,0);
     glEnable(GL_DEPTH_TEST);
+    
 }
 void reshapeWindowChange(int width, int height){
 	if(height == 0)

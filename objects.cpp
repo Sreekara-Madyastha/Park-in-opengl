@@ -1,7 +1,44 @@
 #include <bits/stdc++.h>
 #include <GL/glut.h>
+// #include "SOIL/SOIL.h" 
+// #include "tk.h"
 #define PI 3.14159
 using namespace std;
+
+
+// unsigned int ID2[40];
+
+// void LoadTexture(const char *filename, GLint num)
+// {
+//     TK_RGBImageRec *texture1;
+
+//     texture1 = tkRGBImageLoad(filename);
+
+//     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+//     glTexImage2D(GL_TEXTURE_2D,            // target
+//                  0,                        // level
+//                  GL_RGB,                   // internalFormat
+//                  texture1->sizeX,          // w
+//                  texture1->sizeY,          // h
+//                  0,                        // border
+//                  GL_RGB, GL_UNSIGNED_BYTE, // format,type
+//                  texture1->data);          // data
+
+//     // Create Texture
+//     glGenTextures(1, &ID2[num]);
+//     glBindTexture(GL_TEXTURE_2D, ID2[num]);
+
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
+//     // glGenerateMipmap(GL_TEXTURE_2D);
+//     glTexImage2D(GL_TEXTURE_2D, 0, 3,
+//                  texture1->sizeX, texture1->sizeY, 0,
+//                  GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
+// }
 
 void Cylin_draw(double radius,double height,double X,double Y,double Z);
 void Draw_cube(float v[][3]);
@@ -141,6 +178,9 @@ void spam_grass(void)
 
 void roads(void)
 {
+    // glEnable(GL_TEXTURE_2D);
+    // glBindTexture(GL_TEXTURE_2D, ID2[1]);
+    // LoadTexture("sgi /images/road.sgi", 2); //to load the texture from the file
     // Left road  X Z Y
     glBegin(GL_QUADS);
     glColor3f(0, 0, 0);
@@ -299,6 +339,7 @@ void roads(void)
     glVertex3f(0.5, 0.152, -0.21);
     glVertex3f(0.5, 0.152, -0.19);
     glEnd();
+    // glDisable(GL_TEXTURE_2D);
 }
 
 float ver1[8][3] = {
@@ -535,7 +576,6 @@ void cuboid(double X,double Y,double Z,double L,double B,double H){
     glEnd();
 }
 
-
 void drawCylinder(double radius,double height,double X,double Y,double Z){
     double Cx=X,Cy=Y,Cz=Z;
     for(int i=1;i<1000;i++){
@@ -609,8 +649,6 @@ void ferris_wheel(double X,double Z){
     glTranslatef(-X,0.0,-Z);
 
 }
-
-
 
 void person(double X,double Z){
 
@@ -703,288 +741,279 @@ void make_cube()
     glutSolidCube(1); 
 }
 
-
-
-void trunk(int x,int y,int z)
+void trunk(double x, double y, double z)
 {
-    glTranslatef(0,0.15,0);
-    glScalef(0.03,0.035,0.03);
-    //trunk
-    glColor3f(0.67,0.34, 0);
-    glPushMatrix();
-    glTranslatef(x,y,z);
-    glScalef(6,6,-6);
-    make_cube();
-    glPopMatrix(); 
+    glColor3f(0.67, 0.34, 0);
+    drawCylinder(0.08, 0.20, x + 0.1, y + 0.15, z - 0.1);
+    double x1=x,y1=y,z1=z;
+    
+    glTranslatef(x, y+0.2, z);
+    x=0;y=0;z=0;
+    glScalef(0.03, 0.035, 0.03);
+    // trunk
+    //  glPushMatrix();
+    //  glTranslatef(x,y,z);
+    //  glScalef(6,6,-6);
+    //  make_cube();
+    //  glPopMatrix();
 
     // middle part
-    glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+6,z+1);
-    glScalef(8,7,-8);
+    glTranslatef(x - 1, y + 6, z + 1);
+    glScalef(8, 7, -8);
     make_cube();
-    glPopMatrix(); 
-    
+    glPopMatrix();
 
-    //spheres 
-    glColor3f(0,0.8,0);
+    // spheres
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+6,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 6, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+6,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 6, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+6,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 6, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+6,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 6, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
     // 2nd line
-    glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+8,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 8, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+8,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 8, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+8,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 8, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+8,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 8, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-
-    //3rd line
-    glColor3f(0,0.8,0);
+    // 3rd line
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+11,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 11, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+11,z+1);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 11, z + 1);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7,y+11,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7, y + 11, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1,y+11,z-7);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1, y + 11, z - 7);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
-
+    glPopMatrix();
 
     // middle line 1
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+6,z+1.5);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 6, z + 1.5);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7.5,y+6,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7.5, y + 6, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+6,z-7.5);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 6, z - 7.5);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1.5,y+6,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1.5, y + 6, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
-
-
+    glPopMatrix();
 
     // middle line  2
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+8.5,z+2);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 8.5, z + 2);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+8,y+8.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 8, y + 8.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+8.5,z-8);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 8.5, z - 8);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-2,y+8.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 2, y + 8.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-    
+    // middle line  3
 
-        // middle line  3
-
-      glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+11.5,z+1.5);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 11.5, z + 1.5);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+7.5,y+11.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 7.5, y + 11.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+3,y+11.5,z-7.5);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 3, y + 11.5, z - 7.5);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x-1.5,y+11.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x - 1.5, y + 11.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-     //top corner
-       glColor3f(0,0.8,0);
+    // top corner
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+4,y+13,z-4);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 4, y + 13, z - 4);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-      glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+2,y+12.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 2, y + 12.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-      glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+5,y+12.5,z-3);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 5, y + 12.5, z - 3);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-      glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+2,y+12.5,z-4);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 2, y + 12.5, z - 4);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-      glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+5,y+12.5,z-4);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 5, y + 12.5, z - 4);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-    glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+2,y+12.5,z-2);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 2, y + 12.5, z - 2);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-    glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+5,y+12.5,z-2);
-    glScalef(2.5,2.5,-2.5);
+    glTranslatef(x + 5, y + 12.5, z - 2);
+    glScalef(2.5, 2.5, -2.5);
     make_sphere();
-    glPopMatrix(); 
+    glPopMatrix();
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0, 0.8, 0);
     glPushMatrix();
-    glTranslatef(x+2,y+12.5,z-1);
-    glScalef(3,3,3);
+    glTranslatef(x + 2, y + 12.5, z - 1);
+    glScalef(3, 3, 3);
     make_sphere();
-    glPopMatrix(); 
-    glScalef(1/0.03,1/0.035,1/0.03);
-    glTranslatef(0,-0.15,0);
+    glPopMatrix();
+    glScalef(1 / 0.03, 1 / 0.035, 1 / 0.03);
+    glTranslatef(-x1-0, -y1-0.2, -z1-0);
 }
 
+void Tree_spam(){
+    trunk(2.6,0.0,-0.9);
+    trunk(2.6,0.0,-0.3);
+    trunk(2.6,0.0,0.3);
+    trunk(2.6,0.0,0.9);
+}
 
 void Lake(float x1, float y1, float r)
 {
     float x2, y2;
     double radius = r;
-    float xo=x1, yo=y1+r;
+    float xo = x1, yo = y1 + r;
     float angle;
     glColor3f(0.206, 0.362, 0.433);
     glBegin(GL_TRIANGLE_FAN);
@@ -1004,26 +1033,22 @@ void Lake(float x1, float y1, float r)
     glVertex3f(1.35, 0.165, 1.5);
     glEnd();
     glColor3f(0.135, 0.065, 0.001);
-    Cylin_draw(0.02,0.05,1.25,0.15,1.15);
-    Cylin_draw(0.02,0.05,1.75,0.15,1.15);
-    Cylin_draw(0.02,0.05,1.75,0.15,1.35);
-    Cylin_draw(0.02,0.05,1.25,0.15,1.35);
-    Cylin_draw(0.008,0.13,1.25,0.21,1.15);
-    Cylin_draw(0.008,0.13,1.75,0.21,1.15);
-    Cylin_draw(0.008,0.13,1.25,0.21,1.35);
-    Cylin_draw(0.008,0.13,1.75,0.21,1.35);
-    float v1[8][3]={
-        {1.22,0.20,1.38},{1.22,0.20,1.31},{1.78,0.20,1.31},{1.78,0.20,1.38},{1.22,0.21,1.38},{1.22,0.21,1.31},{1.78,0.21,1.31},{1.78,0.21,1.38}
-    };
-    float v2[8][3]={
-        {1.22,0.20,1.31},{1.22,0.20,1.25},{1.78,0.20,1.25},{1.78,0.20,1.31},{1.22,0.21,1.31},{1.22,0.21,1.25},{1.78,0.21,1.25},{1.78,0.21,1.31}
-    };
-    float v3[8][3]={
-        {1.22,0.20,1.25},{1.22,0.20,1.19},{1.78,0.20,1.19},{1.78,0.20,1.25},{1.22,0.21,1.25},{1.22,0.21,1.19},{1.78,0.21,1.19},{1.78,0.21,1.25}
-    };
-    float v4[8][3]={
-        {1.22,0.20,1.19},{1.22,0.20,1.12},{1.78,0.20,1.12},{1.78,0.20,1.19},{1.22,0.21,1.19},{1.22,0.21,1.12},{1.78,0.21,1.12},{1.78,0.21,1.19}
-    };
+    Cylin_draw(0.02, 0.05, 1.25, 0.15, 1.15);
+    Cylin_draw(0.02, 0.05, 1.75, 0.15, 1.15);
+    Cylin_draw(0.02, 0.05, 1.75, 0.15, 1.35);
+    Cylin_draw(0.02, 0.05, 1.25, 0.15, 1.35);
+    Cylin_draw(0.008, 0.13, 1.25, 0.21, 1.15);
+    Cylin_draw(0.008, 0.13, 1.75, 0.21, 1.15);
+    Cylin_draw(0.008, 0.13, 1.25, 0.21, 1.35);
+    Cylin_draw(0.008, 0.13, 1.75, 0.21, 1.35);
+    float v1[8][3] = {
+        {1.22, 0.20, 1.38}, {1.22, 0.20, 1.31}, {1.78, 0.20, 1.31}, {1.78, 0.20, 1.38}, {1.22, 0.21, 1.38}, {1.22, 0.21, 1.31}, {1.78, 0.21, 1.31}, {1.78, 0.21, 1.38}};
+    float v2[8][3] = {
+        {1.22, 0.20, 1.31}, {1.22, 0.20, 1.25}, {1.78, 0.20, 1.25}, {1.78, 0.20, 1.31}, {1.22, 0.21, 1.31}, {1.22, 0.21, 1.25}, {1.78, 0.21, 1.25}, {1.78, 0.21, 1.31}};
+    float v3[8][3] = {
+        {1.22, 0.20, 1.25}, {1.22, 0.20, 1.19}, {1.78, 0.20, 1.19}, {1.78, 0.20, 1.25}, {1.22, 0.21, 1.25}, {1.22, 0.21, 1.19}, {1.78, 0.21, 1.19}, {1.78, 0.21, 1.25}};
+    float v4[8][3] = {
+        {1.22, 0.20, 1.19}, {1.22, 0.20, 1.12}, {1.78, 0.20, 1.12}, {1.78, 0.20, 1.19}, {1.22, 0.21, 1.19}, {1.22, 0.21, 1.12}, {1.78, 0.21, 1.12}, {1.78, 0.21, 1.19}};
     glColor3f(0.438, 0.344, 0.218);
     Draw_cube(v1);
     glColor3f(0.454, 0.321, 0.225);
@@ -1033,58 +1058,81 @@ void Lake(float x1, float y1, float r)
     glColor3f(0.454, 0.321, 0.225);
     Draw_cube(v4);
     glColor3f(0.135, 0.065, 0.001);
-    float v5[8][3]={
-        {1.22,0.33,1.36},{1.78,0.33,1.36},{1.78,0.33,1.34},{1.22,0.33,1.34},{1.22,0.31,1.36},{1.78,0.31,1.36},{1.78,0.31,1.34},{1.22,0.31,1.34}
-    };
+    float v5[8][3] = {
+        {1.22, 0.33, 1.36}, {1.78, 0.33, 1.36}, {1.78, 0.33, 1.34}, {1.22, 0.33, 1.34}, {1.22, 0.31, 1.36}, {1.78, 0.31, 1.36}, {1.78, 0.31, 1.34}, {1.22, 0.31, 1.34}};
     Draw_cube(v5);
-    float v6[8][3]={
-        {1.22,0.33,1.16},{1.78,0.33,1.16},{1.78,0.33,1.14},{1.22,0.33,1.14},{1.22,0.31,1.16},{1.78,0.31,1.16},{1.78,0.31,1.14},{1.22,0.31,1.14}
-    };
+    float v6[8][3] = {
+        {1.22, 0.33, 1.16}, {1.78, 0.33, 1.16}, {1.78, 0.33, 1.14}, {1.22, 0.33, 1.14}, {1.22, 0.31, 1.16}, {1.78, 0.31, 1.16}, {1.78, 0.31, 1.14}, {1.22, 0.31, 1.14}};
     Draw_cube(v6);
 
-    //Side walls
-    //Straight track
-    glColor3f(1, 1, 1);
-    float v7[8][3]={
-        {1.32,0.14,1.495},{1.32,0.20,1.495},{1.32,0.20,0.87},{1.32,0.14,0.87},{1.38,0.14,1.495},{1.38,0.20,1.495},{1.38,0.20,0.87},{1.38,0.14,0.87}
-    };
+    // Side walls
+    // Straight track
+    glColor3f(0.3425,0.3375,0.32);
+    float v7[8][3] = {
+        {1.32, 0.14, 1.495}, {1.32, 0.20, 1.495}, {1.32, 0.20, 0.87}, {1.32, 0.14, 0.87}, {1.38, 0.14, 1.495}, {1.38, 0.20, 1.495}, {1.38, 0.20, 0.87}, {1.38, 0.14, 0.87}};
     Draw_cube(v7);
-    glColor3f(1, 1, 1);
-    float v8[8][3]={
-        {1.62,0.14,1.495},{1.62,0.20,1.495},{1.62,0.20,0.87},{1.62,0.14,0.87},{1.68,0.14,1.495},{1.68,0.20,1.495},{1.68,0.20,0.87},{1.68,0.14,0.87}
-    };
+    glColor3f(0.3425,0.3375,0.32);
+    float v8[8][3] = {
+        {1.62, 0.14, 1.495}, {1.62, 0.20, 1.495}, {1.62, 0.20, 0.87}, {1.62, 0.14, 0.87}, {1.68, 0.14, 1.495}, {1.68, 0.20, 1.495}, {1.68, 0.20, 0.87}, {1.68, 0.14, 0.87}};
     Draw_cube(v8);
-    //Circle Boundary
-    float x_o=1.97,y_o=0.4,z_o=0.14;
-    float a_o=2.03,b_o=0.4,c_o=0.14;
-    for(float p=0;p<=((77.3)*PI)/180;p+=(2*(PI)/180)){
-        float x_1=1.5+(0.47)*cos(p),y_1=0.4+(0.47)*sin(p),z_1=0.20;
-        float a_1=1.5+(0.53)*cos(p),b_1=0.4+(0.53)*sin(p),c_1=0.20;
-        float v[8][3]={
-            {x_o,z_o,y_o},{x_1,z_o,y_1},{x_1,z_1,y_1},{x_o,z_1,y_o},{a_o,z_o,b_o},{a_1,z_o,b_1},{a_1,z_1,b_1},{a_o,z_1,b_o}
-        };
+    // Circle Boundary
+    float x_o = 1.97, y_o = 0.4, z_o = 0.14;
+    float a_o = 2.03, b_o = 0.4, c_o = 0.14;
+    glColor3f(0.3425,0.3375,0.32);
+    for (float p = 0; p <= ((77.3) * PI) / 180; p += (8 * (PI) / 180))
+    {
+        float x_1 = 1.5 + (0.47) * cos(p), y_1 = 0.4 + (0.47) * sin(p), z_1 = 0.20;
+        float a_1 = 1.5 + (0.53) * cos(p), b_1 = 0.4 + (0.53) * sin(p), c_1 = 0.20;
+        float v[8][3] = {
+            {x_o, z_o, y_o}, {x_1, z_o, y_1}, {x_1, z_1, y_1}, {x_o, z_1, y_o}, {a_o, z_o, b_o}, {a_1, z_o, b_1}, {a_1, z_1, b_1}, {a_o, z_1, b_o}};
         Draw_cube(v);
-        x_o=x_1;
-        y_o=y_1;
-        a_o=a_1;
-        b_o=b_1;
+        x_o = 1.5+(0.47) * cos(p+((4*(PI))/180));
+        y_o = 0.4+(0.47) * sin(p+((4*(PI))/180));
+        a_o = 1.5+(0.53) * cos(p+((4*(PI))/180));
+        b_o = 0.4+(0.53) * sin(p+((4*(PI))/180));   
     }
-    x_o=1.97,y_o=0.4,z_o=0.14;
-    a_o=2.03,b_o=0.4,c_o=0.14;
-    for(float p=2*PI;p>=((102.7)*PI)/180;p-=(2*(PI)/180)){
-        float x_1=1.5+(0.47)*cos(p),y_1=0.4+(0.47)*sin(p),z_1=0.20;
-        float a_1=1.5+(0.53)*cos(p),b_1=0.4+(0.53)*sin(p),c_1=0.20;
-        float v[8][3]={
-            {x_o,z_o,y_o},{x_1,z_o,y_1},{x_1,z_1,y_1},{x_o,z_1,y_o},{a_o,z_o,b_o},{a_1,z_o,b_1},{a_1,z_1,b_1},{a_o,z_1,b_o}
-        };
+    glColor3f(0.304, 0.286, 0.41);
+    for (float p = 0; p <= ((77.3) * PI) / 180; p += (8 * (PI) / 180))
+    {
+        x_o = 1.5+(0.47) * cos(p+((4*(PI))/180));
+        y_o = 0.4+(0.47) * sin(p+((4*(PI))/180));
+        a_o = 1.5+(0.53) * cos(p+((4*(PI))/180));
+        b_o = 0.4+(0.53) * sin(p+((4*(PI))/180));   
+        float x_1 = 1.5 + (0.47) * cos(p), y_1 = 0.4 + (0.47) * sin(p), z_1 = 0.20;
+        float a_1 = 1.5 + (0.53) * cos(p), b_1 = 0.4 + (0.53) * sin(p), c_1 = 0.20;
+        float v[8][3] = {
+            {x_o, z_o, y_o}, {x_1, z_o, y_1}, {x_1, z_1, y_1}, {x_o, z_1, y_o}, {a_o, z_o, b_o}, {a_1, z_o, b_1}, {a_1, z_1, b_1}, {a_o, z_1, b_o}};
         Draw_cube(v);
-        x_o=x_1;
-        y_o=y_1;
-        a_o=a_1;
-        b_o=b_1;
     }
 
-
+    glColor3f(0.304, 0.286, 0.41);
+    x_o = 1.97, y_o = 0.4, z_o = 0.14;
+    a_o = 2.03, b_o = 0.4, c_o = 0.14;
+    for (float p = 2 * PI; p >= ((102.7) * PI) / 180; p -= (8 * (PI) / 180))
+    {
+        float x_1 = 1.5 + (0.47) * cos(p), y_1 = 0.4 + (0.47) * sin(p), z_1 = 0.20;
+        float a_1 = 1.5 + (0.53) * cos(p), b_1 = 0.4 + (0.53) * sin(p), c_1 = 0.20;
+        float v[8][3] = {
+            {x_o, z_o, y_o}, {x_1, z_o, y_1}, {x_1, z_1, y_1}, {x_o, z_1, y_o}, {a_o, z_o, b_o}, {a_1, z_o, b_1}, {a_1, z_1, b_1}, {a_o, z_1, b_o}};
+        Draw_cube(v);
+        x_o = 1.5+(0.47) * cos(p-((4*(PI))/180));
+        y_o = 0.4+(0.47) * sin(p-((4*(PI))/180));
+        a_o = 1.5+(0.53) * cos(p-((4*(PI))/180));
+        b_o = 0.4+(0.53) * sin(p-((4*(PI))/180)); 
+    }
+    glColor3f(0.3425,0.3375,0.32);
+    for (float p = 2 * PI; p >= ((102.7) * PI) / 180; p -= (8 * (PI) / 180))
+    {
+        x_o = 1.5+(0.47) * cos(p-((4*(PI))/180));
+        y_o = 0.4+(0.47) * sin(p-((4*(PI))/180));
+        a_o = 1.5+(0.53) * cos(p-((4*(PI))/180));
+        b_o = 0.4+(0.53) * sin(p-((4*(PI))/180)); 
+        float x_1 = 1.5 + (0.47) * cos(p), y_1 = 0.4 + (0.47) * sin(p), z_1 = 0.20;
+        float a_1 = 1.5 + (0.53) * cos(p), b_1 = 0.4 + (0.53) * sin(p), c_1 = 0.20;
+        float v[8][3] = {
+            {x_o, z_o, y_o}, {x_1, z_o, y_1}, {x_1, z_1, y_1}, {x_o, z_1, y_o}, {a_o, z_o, b_o}, {a_1, z_o, b_1}, {a_1, z_1, b_1}, {a_o, z_1, b_o}};
+        Draw_cube(v);
+    }
 }
 
 void Draw_cube(float v[][3]){
@@ -1164,39 +1212,25 @@ void drawHorizontalCylinder(double radius,double height,double X,double Y,double
 
 }
 
-
 void slide()
-
 {
+    glScalef(1.5,1.5,1.5);
+    glTranslatef(-3.55,0,0.45);
 
     float vert[8][3] = {
-
     {2.1,0.17,-1.3},
-
     {1.65,0.28,-1.3},
-
     {1.675,0.28,-1.3},
-
     {2.125,0.17,-1.3},
-
     {2.1,0.17,-1.4},
-
     {1.65,0.28,-1.4},
-
     {1.675,0.28,-1.4},
-
     {2.125,0.17,-1.4},
-
     };
-
- 
 
     glBegin(GL_QUADS);
 
- 
-
     // front
-
     glColor3f(0,0,1);
 
     glVertex3fv(vert[0]);
@@ -1325,47 +1359,40 @@ void slide()
 
     glEnd();
 
- 
-
     glColor3f(0,1,0);
 
     drawHorizontalCylinder(0.005,0.1,1.65,0.35,-1.4);
 
- 
-
     drawHorizontalCylinder(0.005,0.08,1.65,0.17,-1.39);
-
     drawHorizontalCylinder(0.005,0.08,1.65,0.20,-1.39);
-
     drawHorizontalCylinder(0.005,0.08,1.65,0.23,-1.39);
-
     drawHorizontalCylinder(0.005,0.08,1.65,0.26,-1.39);
 
-
+    glTranslatef(3.55,0,-0.45);
+    glScalef(0.66,0.66,0.66);
 }
 
-
 void seeSaw()
-
 {
-
+    glScalef(1.5,1.5,1.5);
+    glTranslatef(-2.18,0,0.45);
     float vert[8][3] = {
 
-        {1.4-0.2,0.175+0.025,-1.4},
+        {1.4-0.2+0.05,0.175+0.025,-1.4},
 
-        {1.15-0.2,0.175+0.025,-1.4},
+        {1.15-0.2-0.05,0.175+0.025,-1.4},
 
-        {1.15-0.2,0.2+0.025,-1.4},
+        {1.15-0.2-0.05,0.2+0.025,-1.4},
 
-        {1.4-0.2,0.2+0.025,-1.4},
+        {1.4-0.2+0.05,0.2+0.025,-1.4},
 
-        {1.4-0.2,0.175+0.025,-1.35},
+        {1.4-0.2+0.05,0.175+0.025,-1.35},
 
-        {1.15-0.2,0.175+0.025,-1.35},
+        {1.15-0.2-0.05,0.175+0.025,-1.35},
 
-        {1.15-0.2,0.2+0.025,-1.35},
+        {1.15-0.2-0.05,0.2+0.025,-1.35},
 
-        {1.4-0.2,0.2+0.025,-1.35},
+        {1.4-0.2+0.05,0.2+0.025,-1.35},
 
     };
 
@@ -1499,8 +1526,170 @@ void seeSaw()
 
     glVertex3fv(vert[4]);
 
- 
 
     glEnd();
+    glTranslatef(2.18,0,-0.45);
+    glScalef(0.666,0.666,0.666);
 }
 
+void Street_light(float x,float z){
+    float v[8][3]={
+        {x-0.05,0.14,z-0.05},{x+0.05,0.14,z-0.05},{x+0.05,0.14,z+0.05},{x-0.05,0.14,z+0.05},{x-0.05,0.18,z-0.05},{x+0.05,0.18,z-0.05},{x+0.05,0.18,z+0.05},{x-0.05,0.18,z+0.05}
+    };
+    glColor3f(0.304, 0.286, 0.41);
+    Draw_cube(v);
+    glColor3f(0.3425,0.3375,0.32);
+    Cylin_draw(0.02,0.14,x,0.17,z);
+    Cylin_draw(0.01,0.32,x,0.30,z);
+    glColor3f(1,1,0);
+    glPushMatrix();
+    glTranslatef(x,0.60,z);
+    glutSolidSphere(0.045,30,30);
+    // glTranslatef(x,-0.60,z);
+    glPopMatrix();
+}
+
+void Lights_spam(){
+    for(float i=-1.0;i<=1.0;i++){
+        Street_light(2.2,i);
+        Street_light(0.8,i);
+        Street_light(-1.4,i);
+    }
+    Street_light(-0.3,-0.4);
+
+    glColor3f(0,1,0);
+    glPushMatrix();
+    glTranslatef(0.97,0.48,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(0.8,0.3,0.09);
+    glPushMatrix();
+    glTranslatef(1.03,0.48,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(1.0,0.52,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(0,0,1);
+    Cylin_draw(0.01,0.06,1.0,0.44,-1.0);
+    glColor3f(0.55,0.45,0);
+    Cylin_draw(0.01,0.34,1.0,0.1,-1.0);
+    glColor3f(0.39,0.195,0.312);
+    glPushMatrix();
+    glTranslatef(1.0,0.5,-1.0);
+    glutWireSphere(0.1,10,10);
+    glPopMatrix();
+
+    glColor3f(0,1,0);
+    glPushMatrix();
+    glTranslatef(1.97,0.48,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(0.8,0.3,0.09);
+    glPushMatrix();
+    glTranslatef(2.03,0.48,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(2.0,0.52,-1.0);
+    glutSolidSphere(0.03,10,10);
+    glPopMatrix();
+    glColor3f(0,0,1);
+    Cylin_draw(0.01,0.06,2.0,0.44,-1.0);
+    glColor3f(0.55,0.45,0);
+    Cylin_draw(0.01,0.34,2.0,0.1,-1.0);
+    glColor3f(0.39,0.195,0.312);
+    glPushMatrix();
+    glTranslatef(2.0,0.5,-1.0);
+    glutWireSphere(0.1,10,10);
+    glPopMatrix();
+}
+
+void swing()
+{
+    glTranslatef(-2.5,0.15,-1);
+    glRotatef(20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(-20,0,0,1);
+    glTranslatef(2.5,-0.15,1);
+
+    glTranslatef(-2.5,0.15,-0.5);
+    glRotatef(20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(-20,0,0,1);
+    glTranslatef(2.5,-0.15,0.5);
+
+    glTranslatef(-2.775,0.15,-0.5);
+    glRotatef(-20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(20,0,0,1);
+    glTranslatef(2.775,-0.15,0.5);
+
+    glTranslatef(-2.775,0.15,-1);
+    glRotatef(-20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(20,0,0,1);
+    glTranslatef(2.775,-0.15,1);
+
+    drawHorizontalCylinder(0.005,0.5,-2.6375,0.53,-1);
+
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.88);
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.78);
+    cuboid(-2.675,0.23,-0.76,0.075,0.14,0.03);
+
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.58);
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.68);
+    cuboid(-2.675,0.23,-0.56,0.075,0.14,0.03);
+}
+
+void handle()
+{
+    drawHorizontalCylinder(0.005,0.1,0,0.28,-0.05);
+    drawCylinder(0.005,0.07,0,0.21,-0.05);
+    drawCylinder(0.005,0.07,0,0.21,0.05);
+}
+
+void drawBigCylinder(double radius,double height,double X,double Y,double Z){
+    double Cx=X,Cy=Y,Cz=Z;
+    for(int i=1;i<100000;i++){
+        float x=Cx+radius*(cos(2*PI*i/100000));
+        float z=Cz+radius*(sin(2*PI*i/100000));
+        glBegin(GL_QUADS);
+        glVertex3f(Cx,Cy,Cz);
+        glVertex3f(x,Cy,z);
+        glVertex3f(x,Cy+height,z);
+        glVertex3f(Cx,Cy+height,Cz);
+        glEnd();
+    }
+}
+
+void merryGoRound()
+{
+    drawBigCylinder(0.3,0.01,-1.9,0.2,-0.7);
+    glColor3f(0,0,0);
+
+    glTranslatef(-1.7,0,-0.7);
+    handle();
+    glTranslatef(1.7,0,0.7);
+
+    glTranslatef(-2.1,0,-0.7);
+    handle();
+    glTranslatef(2.1,0,0.7);
+
+    glTranslatef(-1.9,0,-0.9);
+    glRotatef(90,0,1,0);
+    handle();
+    glRotatef(-90,0,1,0);
+    glTranslatef(1.9,0,0.9);
+
+    glTranslatef(-1.9,0,-0.5);
+    glRotatef(90,0,1,0);
+    handle();
+    glRotatef(-90,0,1,0);
+    glTranslatef(1.9,0,0.5);
+
+
+}
