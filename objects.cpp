@@ -409,7 +409,6 @@ void drawWalls()
 }
 
 void bench2(float c1[], float c2[])
-
 {
 
     // Legs
@@ -590,6 +589,7 @@ void drawCylinder(double radius,double height,double X,double Y,double Z){
     }
 }
 
+
 void seat(){
     glRotatef(45,1,0,0);
     drawCylinder(0.005,0.1414,0.0,-0.1414,0.0);
@@ -727,8 +727,6 @@ void person(double X,double Z){
     
     glRotatef(-Direction,0,1,0);
     glTranslatef(-X,0,-Z);
-    
-    
 }
 
 void make_sphere(){
