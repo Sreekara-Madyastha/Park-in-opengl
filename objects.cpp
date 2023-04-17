@@ -368,7 +368,6 @@ void drawWalls()
 }
 
 void bench2(float c1[], float c2[])
-
 {
 
     // Legs
@@ -535,12 +534,25 @@ void cuboid(double X,double Y,double Z,double L,double B,double H){
     glEnd();
 }
 
-
 void drawCylinder(double radius,double height,double X,double Y,double Z){
     double Cx=X,Cy=Y,Cz=Z;
     for(int i=1;i<1000;i++){
         float x=Cx+radius*(cos(2*PI*i/1000));
         float z=Cz+radius*(sin(2*PI*i/1000));
+        glBegin(GL_QUADS);
+        glVertex3f(Cx,Cy,Cz);
+        glVertex3f(x,Cy,z);
+        glVertex3f(x,Cy+height,z);
+        glVertex3f(Cx,Cy+height,Cz);
+        glEnd();
+    }
+}
+
+void drawBigCylinder(double radius,double height,double X,double Y,double Z){
+    double Cx=X,Cy=Y,Cz=Z;
+    for(int i=1;i<100000;i++){
+        float x=Cx+radius*(cos(2*PI*i/100000));
+        float z=Cz+radius*(sin(2*PI*i/100000));
         glBegin(GL_QUADS);
         glVertex3f(Cx,Cy,Cz);
         glVertex3f(x,Cy,z);
@@ -609,8 +621,6 @@ void ferris_wheel(double X,double Z){
     glTranslatef(-X,0.0,-Z);
 
 }
-
-
 
 void person(double X,double Z){
 
@@ -689,8 +699,6 @@ void person(double X,double Z){
     
     glRotatef(-Direction,0,1,0);
     glTranslatef(-X,0,-Z);
-    
-    
 }
 
 void make_sphere(){
@@ -702,8 +710,6 @@ void make_cube()
     glTranslatef(0.5,0.5,0.5);
     glutSolidCube(1); 
 }
-
-
 
 void trunk(int x,int y,int z)
 {
@@ -785,8 +791,6 @@ void trunk(int x,int y,int z)
     glScalef(2.5,2.5,-2.5);
     make_sphere();
     glPopMatrix(); 
-
-
 
     //3rd line
     glColor3f(0,0.8,0);
@@ -968,8 +972,7 @@ void trunk(int x,int y,int z)
     make_sphere();
     glPopMatrix(); 
 
-
-     glColor3f(0,0.8,0);
+    glColor3f(0,0.8,0);
     glPushMatrix();
     glTranslatef(x+2,y+12.5,z-1);
     glScalef(3,3,3);
@@ -978,7 +981,6 @@ void trunk(int x,int y,int z)
     glScalef(1/0.03,1/0.035,1/0.03);
     glTranslatef(0,-0.15,0);
 }
-
 
 void Lake(float x1, float y1, float r)
 {
@@ -1083,8 +1085,6 @@ void Lake(float x1, float y1, float r)
         a_o=a_1;
         b_o=b_1;
     }
-
-
 }
 
 void Draw_cube(float v[][3]){
@@ -1163,8 +1163,6 @@ void drawHorizontalCylinder(double radius,double height,double X,double Y,double
     }
 
 }
-
-
 
 void slide()
 {
@@ -1326,7 +1324,6 @@ void slide()
     glScalef(0.66,0.66,0.66);
 }
 
-
 void seeSaw()
 {
     glScalef(1.5,1.5,1.5);
@@ -1485,4 +1482,76 @@ void seeSaw()
     glEnd();
     glTranslatef(2.18,0,-0.45);
     glScalef(0.666,0.666,0.666);
+}
+
+void swing()
+{
+    glTranslatef(-2.5,0.15,-1);
+    glRotatef(20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(-20,0,0,1);
+    glTranslatef(2.5,-0.15,1);
+
+    glTranslatef(-2.5,0.15,-0.5);
+    glRotatef(20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(-20,0,0,1);
+    glTranslatef(2.5,-0.15,0.5);
+
+    glTranslatef(-2.775,0.15,-0.5);
+    glRotatef(-20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(20,0,0,1);
+    glTranslatef(2.775,-0.15,0.5);
+
+    glTranslatef(-2.775,0.15,-1);
+    glRotatef(-20,0,0,1);
+    drawCylinder(0.005,0.8,0,-0.4,0);
+    glRotatef(20,0,0,1);
+    glTranslatef(2.775,-0.15,1);
+
+    drawHorizontalCylinder(0.005,0.5,-2.6375,0.53,-1);
+
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.88);
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.78);
+    cuboid(-2.675,0.23,-0.76,0.075,0.14,0.03);
+
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.58);
+    drawCylinder(0.003,0.3,-2.6375,0.23,-0.68);
+    cuboid(-2.675,0.23,-0.56,0.075,0.14,0.03);
+}
+
+void handle()
+{
+    drawHorizontalCylinder(0.005,0.1,0,0.28,-0.05);
+    drawCylinder(0.005,0.07,0,0.21,-0.05);
+    drawCylinder(0.005,0.07,0,0.21,0.05);
+}
+
+void merryGoRound()
+{
+    drawBigCylinder(0.3,0.01,-1.9,0.2,-0.7);
+    glColor3f(0,0,0);
+
+    glTranslatef(-1.7,0,-0.7);
+    handle();
+    glTranslatef(1.7,0,0.7);
+
+    glTranslatef(-2.1,0,-0.7);
+    handle();
+    glTranslatef(2.1,0,0.7);
+
+    glTranslatef(-1.9,0,-0.9);
+    glRotatef(90,0,1,0);
+    handle();
+    glRotatef(-90,0,1,0);
+    glTranslatef(1.9,0,0.9);
+
+    glTranslatef(-1.9,0,-0.5);
+    glRotatef(90,0,1,0);
+    handle();
+    glRotatef(-90,0,1,0);
+    glTranslatef(1.9,0,0.5);
+
+
 }
