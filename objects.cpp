@@ -1,8 +1,13 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "SOIL/SOIL.h"
+
+// #include <freetype2/ft2build.h>
+// #include <freetype/freetype.h>
+
 #define PI 3.14159
 using namespace std;
+
 
 GLint LoadGLTexture(const char *filename)
 {
@@ -33,7 +38,7 @@ float ver[8][3] = {
 
 void spam_grass(void)
 {
-    for (float p = -1.5; p < 1.5; p += 0.015)
+    for (float p = 0; p < 1.5; p += 0.015)
     { // Left area
         for (float q = -3.0; q < -1.307; q += 0.015)
         {
@@ -155,7 +160,7 @@ void spam_grass(void)
 
 void roads(void)
 {
-    glColor3f(1,1,1);
+    glColor3f(0.5f, 0.5f, 0.5f);
     GLuint texture = LoadGLTexture("images/road.png");
     glEnable(GL_TEXTURE_2D);
     glBindTexture( GL_TEXTURE_2D, texture );
@@ -204,6 +209,7 @@ void roads(void)
     glTexCoord2f(0.0, 1.0);
     glVertex3f(0.5, 0.151, -0.1);
     glEnd();
+
     glDisable(GL_TEXTURE_2D);
     
 }
@@ -1422,7 +1428,7 @@ void Street_light(float x,float z){
 }
 
 void Lights_spam(){
-    for(float i=-1.0;i<=1.0;i++){
+    for(float i=-0.7;i<=1.0;i+=0.8){
         Street_light(2.2,i);
         Street_light(0.8,i);
         Street_light(-1.4,i);
@@ -1431,51 +1437,51 @@ void Lights_spam(){
 
     glColor3f(0,1,0);
     glPushMatrix();
-    glTranslatef(0.97,0.48,-1.0);
+    glTranslatef(0.84,0.48,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
     glColor3f(0.8,0.3,0.09);
     glPushMatrix();
-    glTranslatef(1.03,0.48,-1.0);
+    glTranslatef(0.9,0.48,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
     glColor3f(1,1,1);
     glPushMatrix();
-    glTranslatef(1.0,0.52,-1.0);
+    glTranslatef(0.87,0.52,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
-    glColor3f(0,0,1);
-    Cylin_draw(0.01,0.06,1.0,0.44,-1.0);
+    // glColor3f(0,0,1);
+    // Cylin_draw(0.01,0.06,0.87,0.44,-1.3);
     glColor3f(0.55,0.45,0);
-    Cylin_draw(0.01,0.34,1.0,0.1,-1.0);
+    Cylin_draw(0.01,0.34,0.87,0.1,-1.3);
     glColor3f(0.39,0.195,0.312);
     glPushMatrix();
-    glTranslatef(1.0,0.5,-1.0);
+    glTranslatef(0.87,0.5,-1.3);
     glutWireSphere(0.1,10,10);
     glPopMatrix();
 
     glColor3f(0,1,0);
     glPushMatrix();
-    glTranslatef(1.97,0.48,-1.0);
+    glTranslatef(2.10,0.48,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
     glColor3f(0.8,0.3,0.09);
     glPushMatrix();
-    glTranslatef(2.03,0.48,-1.0);
+    glTranslatef(2.16,0.48,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
     glColor3f(1,1,1);
     glPushMatrix();
-    glTranslatef(2.0,0.52,-1.0);
+    glTranslatef(2.13,0.52,-1.3);
     glutSolidSphere(0.03,10,10);
     glPopMatrix();
-    glColor3f(0,0,1);
-    Cylin_draw(0.01,0.06,2.0,0.44,-1.0);
+    // glColor3f(0,0,1);
+    // Cylin_draw(0.01,0.06,2.0,0.44,-1.3);
     glColor3f(0.55,0.45,0);
-    Cylin_draw(0.01,0.34,2.0,0.1,-1.0);
+    Cylin_draw(0.01,0.34,2.13,0.1,-1.3);
     glColor3f(0.39,0.195,0.312);
     glPushMatrix();
-    glTranslatef(2.0,0.5,-1.0);
+    glTranslatef(2.13,0.5,-1.3);
     glutWireSphere(0.1,10,10);
     glPopMatrix();
 }
@@ -1563,5 +1569,200 @@ void merryGoRound()
     glRotatef(-90,0,1,0);
     glTranslatef(1.9,0,0.5);
 
+
+}
+
+void Bases(){
+    // glColor3f(0.5f,0.5f,0.5f);
+    // glBegin(GL_QUADS);
+    // //left wall
+    // glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.75,0.14,1.3);
+    // glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,1.3);
+    // glTexCoord2f(1.0f, 1.0f);glVertex3f(-1.75,0.54,0.5);
+    // glTexCoord2f(0.0f, 1.0f);glVertex3f(-1.75,0.14,0.5);
+    // glEnd();
+    glColor3f(0,0,0);
+    cuboid(-3,0.2,0,1.693,0.05,0.05);
+    cuboid(-3,0.2,0,0.05,1.5,0.05);
+    cuboid(-3,0.2,-1.45,1.693,0.05,0.05);
+    cuboid(-1.357,0.2,0,0.05,1.5,0.05);
+    glColor3f(1,1,1);
+    GLuint texture = LoadGLTexture("images/sand.jpeg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.307,0.16,0);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.307,0.16,-1.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-3.0,0.16,-1.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-3.0,0.16,-0.0);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+}
+
+void Entrance(){
+    glColor3f(0.15,0.5,0.5);
+    float v[8][3]={
+        {1.97,0.14,-1.40},{1.83,0.14,-1.40},{1.83,0.14,-1.50},{1.97,0.14,-1.50},{1.97,0.84,-1.40},{1.83,0.84,-1.40},{1.83,0.84,-1.50},{1.97,0.84,-1.50}
+    };
+    Draw_cube(v);
+    float u[8][3]={
+        {1.17,0.14,-1.40},{1.03,0.14,-1.40},{1.03,0.14,-1.50},{1.17,0.14,-1.50},{1.17,0.84,-1.40},{1.03,0.84,-1.40},{1.03,0.84,-1.50},{1.17,0.84,-1.50}
+    };
+    Draw_cube(u);
+    float w[8][3]={
+        {1.15,0.84,-1.50},{1.15,0.84,-1.40},{1.15,0.7,-1.40},{1.15,0.7,-1.50},{1.84,0.84,-1.50},{1.84,0.84,-1.40},{1.84,0.7,-1.40},{1.84,0.7,-1.50}
+    };
+    Draw_cube(w);
+}
+
+void shop(){
+    glColor3f(1,1,1);
+    GLuint texture = LoadGLTexture("images/wall.jpg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glBegin(GL_QUADS);
+    //left wall
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.75,0.14,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,1.3);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-1.75,0.54,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-1.75,0.14,0.5);
+    glEnd();
+    //Middle wall
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.75,0.14,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.55,0.14,1.3);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.55,0.54,1.3);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-1.75,0.54,1.3);
+    glEnd();
+    //Right wall
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.55,0.14,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.55,0.54,1.3);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.55,0.54,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.55,0.14,0.5);
+
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    glColor3f(1,1,1);
+    texture = LoadGLTexture("images/floor.jpeg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    //Floor
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.55,0.18,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.18,1.3);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-1.75,0.18,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.55,0.18,0.5);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+    
+    //Roof
+    glColor3f(1,1,1);
+    texture = LoadGLTexture("images/roof.jpeg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glBegin(GL_TRIANGLES);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.55,0.54,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,1.3);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.15,0.8,0.9);
+
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.75,0.54,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,0.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.15,0.8,0.9);
+    
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.55,0.54,1.3);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.55,0.54,0.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.15,0.8,0.9);
+    
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,0.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.55,0.54,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.15,0.8,0.9);
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+
+    //Front wall with accessories
+    glColor3f(1,1,1);
+    texture = LoadGLTexture("images/wall.jpg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-1.75,0.14,0.5);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-1.75,0.54,0.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-1.80,0.54,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-1.80,0.14,0.5);
+    // glColor3f(0,0,0);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.50,0.14,0.5);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.50,0.54,0.5);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.55,0.54,0.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.55,0.14,0.5);
+
+    glEnd();
+    
+    glBegin(GL_QUADS);
+
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.0,0.14,0.50);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.1,0.14,0.50);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.1,0.54,0.50);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.0,0.54,0.50);
+
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.1,0.14,0.50);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.5,0.14,0.50);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.5,0.32,0.50);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.1,0.32,0.50);
+
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(-2.1,0.54,0.50);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(-2.5,0.54,0.50);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(-2.5,0.50,0.50);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(-2.1,0.50,0.50);
+
+    glEnd();
+    glDisable(GL_TEXTURE_2D);
+    //Steps
+    glColor3f(1,0,0);
+    float v[8][3]={
+        {-1.80,0.17,0.505},{-2.0,0.17,0.505},{-2.0,0.20,0.505},{-1.80,0.20,0.505},{-1.80,0.17,0.45},{-2.0,0.17,0.45},{-2.0,0.20,0.45},{-1.80,0.20,0.45}
+    };
+    Draw_cube(v);
+    glColor3f(1,0,0);
+    float u[8][3]={
+        {-1.80,0.14,0.505},{-2.0,0.14,0.505},{-2.0,0.17,0.505},{-1.80,0.17,0.505},{-1.80,0.14,0.4},{-2.0,0.14,0.4},{-2.0,0.17,0.4},{-1.80,0.17,0.4}
+    };
+    Draw_cube(u);
+
+    //Door
+    glColor3f(1,1,0);
+    float w[8][3]={
+        {-1.80,0.20,0.505},{-2.0,0.20,0.505},{-2.0,0.54,0.505},{-1.80,0.54,0.505},{-1.80,0.20,0.50},{-2.0,0.20,0.50},{-2.0,0.54,0.50},{-1.80,0.54,0.50}
+    };
+    Draw_cube(w);
+    glColor3f(1,1,1);
+    glPushMatrix();
+    glTranslatef(-1.95,0.37,0.49);
+    glutSolidSphere(0.015,10,10);
+    glPopMatrix();
+
+    glColor3f(1,0,0);
+    float p[8][3]={
+        {-2.1,0.49,0.49},{-2.5,0.49,0.49},{-2.5,0.50,0.49},{-2.1,0.50,0.49},{-2.1,0.45,0.35},{-2.5,0.45,0.35},{-2.5,0.46,0.35},{-2.1,0.46,0.35}
+    };
+    Draw_cube(p);
 
 }

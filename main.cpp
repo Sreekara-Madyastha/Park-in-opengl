@@ -72,6 +72,9 @@ void displayMe(void)
     Tree_spam();
     swing();
     merryGoRound();
+    Entrance();
+    shop();
+    Bases();
     glutSwapBuffers();
 }
 void MyInit(){
