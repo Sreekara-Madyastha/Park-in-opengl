@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <iostream>
 #include<stdio.h>
 #include<math.h>
 #include <GL/glut.h>
@@ -7,7 +7,7 @@
 GLfloat Tx=0,Ty=0,Tz=0,Rx=0,Ry=0,Rz=0,S=1;
 GLfloat old_x=0,old_y=0;
 bool wheel_on=true;
-double T=0.0;
+float T=0.0;
 
 void keyboard(unsigned char key, int x,int y) {
     // glLoadIdentity();

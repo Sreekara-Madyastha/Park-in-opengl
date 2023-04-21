@@ -1,46 +1,23 @@
-#include <bits/stdc++.h>
+#include <iostream>
 #include <GL/glut.h>
-// #include "SOIL/SOIL.h" 
-// #include "tk.h"
+#include "SOIL/SOIL.h"
 #define PI 3.14159
 using namespace std;
 
+GLint LoadGLTexture(const char *filename)
+{
+    GLuint textureID = SOIL_load_OGL_texture(
+        filename,
+        SOIL_LOAD_AUTO,
+        SOIL_CREATE_NEW_ID,
+        SOIL_FLAG_INVERT_Y
+    );
 
-// unsigned int ID2[40];
+    return textureID;
+}
 
-// void LoadTexture(const char *filename, GLint num)
-// {
-//     TK_RGBImageRec *texture1;
 
-//     texture1 = tkRGBImageLoad(filename);
-
-//     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-//     glTexImage2D(GL_TEXTURE_2D,            // target
-//                  0,                        // level
-//                  GL_RGB,                   // internalFormat
-//                  texture1->sizeX,          // w
-//                  texture1->sizeY,          // h
-//                  0,                        // border
-//                  GL_RGB, GL_UNSIGNED_BYTE, // format,type
-//                  texture1->data);          // data
-
-//     // Create Texture
-//     glGenTextures(1, &ID2[num]);
-//     glBindTexture(GL_TEXTURE_2D, ID2[num]);
-
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-//     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_MIRRORED_REPEAT);
-//     // glGenerateMipmap(GL_TEXTURE_2D);
-//     glTexImage2D(GL_TEXTURE_2D, 0, 3,
-//                  texture1->sizeX, texture1->sizeY, 0,
-//                  GL_RGB, GL_UNSIGNED_BYTE, texture1->data);
-// }
-
-void Cylin_draw(double radius,double height,double X,double Y,double Z);
+void Cylin_draw(float radius,float height,float X,float Y,float Z);
 void Draw_cube(float v[][3]);
 
 float ver[8][3] = {
@@ -178,168 +155,57 @@ void spam_grass(void)
 
 void roads(void)
 {
-    // glEnable(GL_TEXTURE_2D);
-    // glBindTexture(GL_TEXTURE_2D, ID2[1]);
-    // LoadTexture("sgi /images/road.sgi", 2); //to load the texture from the file
+    glColor3f(1,1,1);
+    GLuint texture = LoadGLTexture("images/road.png");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+
     // Left road  X Z Y
     glBegin(GL_QUADS);
-    glColor3f(0, 0, 0);
-    glVertex3f(-1.3, 0.151, -1.5);
-    glVertex3f(-1.1, 0.151, -1.5);
-    glVertex3f(-1.1, 0.151, 1.5);
-    glVertex3f(-1.3, 0.151, 1.5);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(-1.3, 0.151, -1.5);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(-1.1, 0.151, -1.5);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(-1.1, 0.151, 1.5);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(-1.3, 0.151, 1.5);
     glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.21, 0.152, -1.5);
-    glVertex3f(-1.19, 0.152, -1.5);
-    glVertex3f(-1.19, 0.152, -1.17);
-    glVertex3f(-1.21, 0.152, -1.17);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.21, 0.152, -0.84);
-    glVertex3f(-1.19, 0.152, -0.84);
-    glVertex3f(-1.19, 0.152, -0.51);
-    glVertex3f(-1.21, 0.152, -0.51);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.21, 0.152, -0.18);
-    glVertex3f(-1.19, 0.152, -0.18);
-    glVertex3f(-1.19, 0.152, 0.15);
-    glVertex3f(-1.21, 0.152, 0.15);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.21, 0.152, 0.48);
-    glVertex3f(-1.19, 0.152, 0.48);
-    glVertex3f(-1.19, 0.152, 0.81);
-    glVertex3f(-1.21, 0.152, 0.81);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.21, 0.152, 1.14);
-    glVertex3f(-1.19, 0.152, 1.14);
-    glVertex3f(-1.19, 0.152, 1.5);
-    glVertex3f(-1.21, 0.152, 1.5);
-    glEnd();
+    
     // Middle road
     glBegin(GL_QUADS);
-    glColor3f(0, 0, 0);
-    glVertex3f(0.5, 0.151, -1.5);
-    glVertex3f(0.7, 0.151, -1.5);
-    glVertex3f(0.7, 0.151, 1.5);
-    glVertex3f(0.5, 0.151, 1.5);
+    // glColor3f(0, 0, 0);
+    glTexCoord2f(0.0f, 0.0f); glVertex3f(0.5, 0.151, -1.5);
+    glTexCoord2f(1.0f, 0.0f); glVertex3f(0.7, 0.151, -1.5);
+    glTexCoord2f(1.0f, 1.0f); glVertex3f(0.7, 0.151, 1.5);
+    glTexCoord2f(0.0f, 1.0f); glVertex3f(0.5, 0.151, 1.5);
     glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(0.59, 0.152, -1.5);
-    glVertex3f(0.61, 0.152, -1.5);
-    glVertex3f(0.61, 0.152, -1.17);
-    glVertex3f(0.59, 0.152, -1.17);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(0.59, 0.152, -0.84);
-    glVertex3f(0.61, 0.152, -0.84);
-    glVertex3f(0.61, 0.152, -0.51);
-    glVertex3f(0.59, 0.152, -0.51);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(0.59, 0.152, -0.18);
-    glVertex3f(0.61, 0.152, -0.18);
-    glVertex3f(0.61, 0.152, 0.15);
-    glVertex3f(0.59, 0.152, 0.15);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(0.59, 0.152, 0.48);
-    glVertex3f(0.61, 0.152, 0.48);
-    glVertex3f(0.61, 0.152, 0.81);
-    glVertex3f(0.59, 0.152, 0.81);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(0.59, 0.152, 1.14);
-    glVertex3f(0.61, 0.152, 1.14);
-    glVertex3f(0.61, 0.152, 1.5);
-    glVertex3f(0.59, 0.152, 1.5);
-    glEnd();
+    
     // Right road
     glBegin(GL_QUADS);
-    glColor3f(0, 0, 0);
+    glTexCoord2f(0.0, 0.0);
     glVertex3f(2.3, 0.151, -1.5);
+    glTexCoord2f(1.0, 0.0);
     glVertex3f(2.5, 0.151, -1.5);
+    glTexCoord2f(1.0, 1.0);
     glVertex3f(2.5, 0.151, 1.5);
+    glTexCoord2f(0.0, 1.0);
     glVertex3f(2.3, 0.151, 1.5);
     glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(2.39, 0.152, -1.5);
-    glVertex3f(2.41, 0.152, -1.5);
-    glVertex3f(2.41, 0.152, -1.17);
-    glVertex3f(2.39, 0.152, -1.17);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(2.39, 0.152, -0.84);
-    glVertex3f(2.41, 0.152, -0.84);
-    glVertex3f(2.41, 0.152, -0.51);
-    glVertex3f(2.39, 0.152, -0.51);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(2.39, 0.152, -0.18);
-    glVertex3f(2.41, 0.152, -0.18);
-    glVertex3f(2.41, 0.152, 0.15);
-    glVertex3f(2.39, 0.152, 0.15);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(2.39, 0.152, 0.48);
-    glVertex3f(2.41, 0.152, 0.48);
-    glVertex3f(2.41, 0.152, 0.81);
-    glVertex3f(2.39, 0.152, 0.81);
-    glEnd();
-    glBegin(GL_QUADS);
-    glColor3f(1, 1, 1);
-    glVertex3f(2.39, 0.152, 1.14);
-    glVertex3f(2.41, 0.152, 1.14);
-    glVertex3f(2.41, 0.152, 1.5);
-    glVertex3f(2.39, 0.152, 1.5);
-    glEnd();
+    
     // Left to Middle road
     glBegin(GL_QUADS);
-    glColor3f(0, 0, 0);
+    glTexCoord2f(0.0, 0.0);
     glVertex3f(-1.1, 0.151, -0.1);
+    glTexCoord2f(1.0, 0.0);
     glVertex3f(-1.1, 0.151, -0.3);
+    glTexCoord2f(1.0, 1.0);
     glVertex3f(0.5, 0.151, -0.3);
+    glTexCoord2f(0.0, 1.0);
     glVertex3f(0.5, 0.151, -0.1);
     glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(-1.0, 0.152, -0.19);
-    glVertex3f(-1.0, 0.152, -0.21);
-    glVertex3f(-0.7, 0.152, -0.21);
-    glVertex3f(-0.7, 0.152, -0.19);
-    glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(-0.4, 0.152, -0.19);
-    glVertex3f(-0.4, 0.152, -0.21);
-    glVertex3f(-0.1, 0.152, -0.21);
-    glVertex3f(-0.1, 0.152, -0.19);
-    glEnd();
-    glBegin(GL_QUADS); // Dividers
-    glColor3f(1, 1, 1);
-    glVertex3f(0.2, 0.152, -0.19);
-    glVertex3f(0.2, 0.152, -0.21);
-    glVertex3f(0.5, 0.152, -0.21);
-    glVertex3f(0.5, 0.152, -0.19);
-    glEnd();
-    // glDisable(GL_TEXTURE_2D);
+    glDisable(GL_TEXTURE_2D);
+    
 }
 
 float ver1[8][3] = {
@@ -529,8 +395,8 @@ void bench2(float c1[], float c2[])
     glEnd();
 }
 
-void cuboid(double X,double Y,double Z,double L,double B,double H){
-    double cuboid[8][3]={
+void cuboid(float X,float Y,float Z,float L,float B,float H){
+    float cuboid[8][3]={
         {X,Y,Z},
         {X+L,Y,Z},
         {X+L,Y,Z-B},
@@ -575,8 +441,8 @@ void cuboid(double X,double Y,double Z,double L,double B,double H){
     glEnd();
 }
 
-void drawCylinder(double radius,double height,double X,double Y,double Z){
-    double Cx=X,Cy=Y,Cz=Z;
+void drawCylinder(float radius,float height,float X,float Y,float Z){
+    float Cx=X,Cy=Y,Cz=Z;
     for(int i=1;i<1000;i++){
         float x=Cx+radius*(cos(2*PI*i/1000));
         float z=Cz+radius*(sin(2*PI*i/1000));
@@ -589,7 +455,6 @@ void drawCylinder(double radius,double height,double X,double Y,double Z){
     }
 }
 
-
 void seat(){
     glRotatef(45,1,0,0);
     drawCylinder(0.005,0.1414,0.0,-0.1414,0.0);
@@ -599,10 +464,10 @@ void seat(){
     cuboid(-0.05,-0.1,0.1,0.1,0.2,0.01);
 }
 
-void ferris_wheel(double X,double Z){
+void ferris_wheel(float X,float Z){
     glTranslatef(X,0.0,Z);
-    double h=0.9;
-    double r=0.7*h;
+    float h=0.9;
+    float r=0.7*h;
     // stand
     glColor3f(0,0.5,0.5);
     drawCylinder(0.01,h,0.0,0.15,+0.15);
@@ -650,12 +515,12 @@ void ferris_wheel(double X,double Z){
 
 }
 
-void person(double X,double Z){
+void person(float X,float Z){
 
     
     glTranslatef(X,0,Z);
     glRotatef(Direction,0,1,0);
-    double h=0.2;
+    float h=0.2;
     //legs
     glColor3f(0.0,0.0,0.0);
     
@@ -739,11 +604,11 @@ void make_cube()
     glutSolidCube(1); 
 }
 
-void trunk(double x, double y, double z)
+void trunk(float x, float y, float z)
 {
     glColor3f(0.67, 0.34, 0);
     drawCylinder(0.08, 0.20, x + 0.1, y + 0.15, z - 0.1);
-    double x1=x,y1=y,z1=z;
+    float x1=x,y1=y,z1=z;
     
     glTranslatef(x, y+0.2, z);
     x=0;y=0;z=0;
@@ -1009,27 +874,36 @@ void Tree_spam(){
 
 void Lake(float x1, float y1, float r)
 {
+    glColor3f(1,1,1);
+    GLuint texture = LoadGLTexture("images/water.jpeg");
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture( GL_TEXTURE_2D, texture );
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
     float x2, y2;
-    double radius = r;
+    float radius = r;
     float xo = x1, yo = y1 + r;
     float angle;
-    glColor3f(0.206, 0.362, 0.433);
     glBegin(GL_TRIANGLE_FAN);
     glVertex3f(x1, 0.165, y1);
     for (angle = 1.0f; angle < 361.0f; angle += 0.2)
     {
         x2 = x1 + sin(angle) * radius;
         y2 = y1 + cos(angle) * radius;
-        glVertex3f(x2, 0.165, y2);
+        glTexCoord2f((angle/361.0), (angle/361.0));glVertex3f(x2, 0.165, y2);
     }
     glEnd();
     glBegin(GL_QUADS);
-    glColor3f(0.204, 0.308, 0.487);
-    glVertex3f(1.35, 0.165, 0.7);
-    glVertex3f(1.65, 0.165, 0.7);
-    glVertex3f(1.65, 0.165, 1.5);
-    glVertex3f(1.35, 0.165, 1.5);
+    glTexCoord2f(0.0f, 0.0f);glVertex3f(1.35, 0.165, 0.7);
+    glTexCoord2f(1.0f, 0.0f);glVertex3f(1.65, 0.165, 0.7);
+    glTexCoord2f(1.0f, 1.0f);glVertex3f(1.65, 0.165, 1.5);
+    glTexCoord2f(0.0f, 1.0f);glVertex3f(1.35, 0.165, 1.5);
     glEnd();
+
+    glDisable(GL_TEXTURE_2D);
+    //end of water
     glColor3f(0.135, 0.065, 0.001);
     Cylin_draw(0.02, 0.05, 1.25, 0.15, 1.15);
     Cylin_draw(0.02, 0.05, 1.75, 0.15, 1.15);
@@ -1170,8 +1044,8 @@ void Draw_cube(float v[][3]){
     glEnd();
 }
 
-void Cylin_draw(double radius,double height,double X,double Y,double Z){
-    double Cx=X,Cy=Y,Cz=Z;
+void Cylin_draw(float radius,float height,float X,float Y,float Z){
+    float Cx=X,Cy=Y,Cz=Z;
     for(int i=1;i<10;i++){
         float x=Cx+radius*(cos(2*PI*i/10));
         float z=Cz+radius*(sin(2*PI*i/10));
@@ -1184,9 +1058,9 @@ void Cylin_draw(double radius,double height,double X,double Y,double Z){
     }
 }
 
-void drawHorizontalCylinder(double radius,double height,double X,double Y,double Z){
+void drawHorizontalCylinder(float radius,float height,float X,float Y,float Z){
 
-    double Cx=X,Cy=Y,Cz=Z;
+    float Cx=X,Cy=Y,Cz=Z;
 
     for(int i=1;i<1000;i++){
 
@@ -1650,8 +1524,8 @@ void handle()
     drawCylinder(0.005,0.07,0,0.21,0.05);
 }
 
-void drawBigCylinder(double radius,double height,double X,double Y,double Z){
-    double Cx=X,Cy=Y,Cz=Z;
+void drawBigCylinder(float radius,float height,float X,float Y,float Z){
+    float Cx=X,Cy=Y,Cz=Z;
     for(int i=1;i<100000;i++){
         float x=Cx+radius*(cos(2*PI*i/100000));
         float z=Cz+radius*(sin(2*PI*i/100000));

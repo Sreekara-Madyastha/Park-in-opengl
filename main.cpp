@@ -7,15 +7,15 @@
 
 
 
-double Angle=0;
-double Direction=0;
-double people[1][2]={{0.3,0.2}};
+float Angle=0;
+float Direction=0;
+float people[1][2]={{0.3,0.2}};
 
 #include "movement.cpp"
 #include "objects.cpp"
 
 int widthWindow=900, heightWindow=700;
-static GLdouble viewer[] = {0.0,1.8,-2.8};
+static GLfloat viewer[] = {0.0,1.8,-2.8};
 
 
 
@@ -124,6 +124,7 @@ int main(int argc,char** argv)
 	glutInitWindowPosition(400,100);
 	glutCreateWindow("PARK IN OPENGL");
 	glutDisplayFunc(displayGraphics);
+
     glutIdleFunc(spin);
 	glutReshapeFunc(reshapeWindowChange);
 	glutKeyboardFunc(keyboard);
