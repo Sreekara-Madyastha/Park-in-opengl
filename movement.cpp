@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<math.h>
 #include <GL/glut.h>
-#include<GL/gl.h>
+// #include<GL/gl.h>
 
 GLfloat Tx=0,Ty=0,Tz=0,Rx=0,Ry=0,Rz=0,S=1;
 GLfloat old_x=0,old_y=0;
@@ -51,6 +51,49 @@ void keyboard(unsigned char key, int x,int y) {
         if(Direction>=360){
             Direction=0;
         }
+    }
+    else if(key=='L'|| key=='l')
+
+    {
+
+        glEnable(GL_LIGHT0);
+
+        glEnable(GL_LIGHT1);
+
+        glEnable(GL_LIGHT2);
+
+        glEnable(GL_LIGHT3);
+
+        glEnable(GL_LIGHT4);
+
+        glEnable(GL_LIGHT5);
+
+        glEnable(GL_LIGHT6);
+
+        glEnable(GL_LIGHT7);
+
+    }
+
+    else if(key=='O' || key=='o')
+
+    {
+
+        glDisable(GL_LIGHT0);
+
+        glDisable(GL_LIGHT1);
+
+        glDisable(GL_LIGHT2);
+
+        glDisable(GL_LIGHT3);
+
+        glDisable(GL_LIGHT4);
+
+        glDisable(GL_LIGHT5);
+
+        glDisable(GL_LIGHT6);
+
+        glDisable(GL_LIGHT7);
+
     }
     glutPostRedisplay();
     return;
